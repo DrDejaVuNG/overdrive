@@ -216,6 +216,26 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
         console.log(`[download-queue] ${job2.id}: a finished ".binary" stays as it is: ${error2.message}`);
       }
     }
+    // An archive's image published before 1.0.7 stayed inside "<homebrew>/<name>-extracted/", where
+    // ShadowMount+ never looks (issue #42): it moves to the homebrew folder itself, once at launch.
+    for (const job2 of jobs) {
+      const folder = job2.publishTo;
+      const image = job2.artifact?.destination;
+      if (job2.state !== "downloaded" || job2.artifact?.nextAction !== "shadowmount" || job2.published || !folder?.endsWith("-extracted") || !image?.startsWith(`${folder}/`)) continue;
+      try {
+        if (!fs.exists(image)) continue;
+        const [target] = publishedImages(job2, [image]);
+        if (fs.exists(target)) throw new Error(`${target} already exists`);
+        storageIdentity(job2);
+        fs.rename(image, target);
+        job2.published = [target];
+        job2.artifact.destination = target;
+        console.log(`[download-queue] ${job2.id}: the image moved out of its extraction folder to ${target}`);
+        change();
+      } catch (error2) {
+        console.log(`[download-queue] ${job2.id}: an extracted image stays where it is: ${error2.message}`);
+      }
+    }
     const find = (id) => {
       const job2 = jobs.find((item) => item.id === id);
       if (!job2) throw new Error("Download is no longer in the queue.");
@@ -689,18 +709,19 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
       }
       const images = (result.artifacts || []).filter((path) => /\.(ffpfsc|ffpfs|ffpkg|exfat)$/i.test(path));
       if (images.length) {
-        const destination = `${job2.root}/homebrew/${folderName(job2.release)}-extracted`;
+        // ShadowMount+ finds an image only directly in the homebrew folder (issue #42: one left in a
+        // "-extracted" folder there was never mounted), so the image file itself is published there,
+        // named as a downloaded image would be; the archive's other files stay where it was extracted.
+        const targets = publishedImages(job2, images);
+        // A target already there while its image is still in the extraction is another file: kept.
+        if (targets.some((target, index) => fs.exists(target) && fs.exists(`${job2.output}/${images[index]}`)))
+          throw new Error("Extracted destination already exists; preserve it and inspect before retrying.");
         fs.mkdir(`${job2.root}/homebrew`, { recursive: true });
-        job2.publishTo = destination;
-        change();
-        if (job2.output !== destination) {
-          if (fs.exists(destination)) throw new Error("Extracted destination already exists; preserve it and inspect before retrying.");
-          storageIdentity(job2);
-          fs.rename(job2.output, destination);
-          job2.output = destination;
-        }
+        storageIdentity(job2);
+        images.forEach((image, index) => fs.exists(`${job2.output}/${image}`) && fs.rename(`${job2.output}/${image}`, targets[index]));
+        job2.published = targets;
         job2.artifact.nextAction = "shadowmount";
-        job2.artifact.destination = `${job2.output}/${images[0]}`;
+        job2.artifact.destination = targets[0];
         job2.state = "downloaded";
         job2.message = t("downloads.extractedReady", { parts: job2.parts ? "all" : "one" });
       } else {
@@ -769,6 +790,11 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
       const size = (index) => sizes[index] ?? largest;
       return Math.max(0, job2.parts.reduce((sum, item, index) => sum + size(index) + (item.completed ? 0 : Math.max(0, size(index) - item.written)), 0) - extracted);
     }
+    // Where an archive's images are published: the homebrew folder itself, under the name a
+    // downloaded image of this release takes (a second image gets "-2", and so on).
+    function publishedImages(job2, images) {
+      return images.map((image, index) => `${job2.root}/homebrew/${folderName(job2.release)}${index ? `-${index + 1}` : ""}.${image.split(".").pop().toLowerCase()}`);
+    }
     function ownedPaths(job2) {
       const managed = (path) => {
         const parts = path.startsWith(`${job2.root}/`) ? path.slice(job2.root.length + 1).split("/") : [];
@@ -780,6 +806,7 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
         job2.downloadDestination,
         job2.output,
         job2.publishTo,
+        ...job2.published || [],
         ...extracted || [],
         job2.release.parts && setDirectory(job2)
       ].filter(Boolean).flatMap((path) => [path, ...[".complete", ".complete.tmp", ".part", ".resume", ".resume.tmp"].map((suffix) => path + suffix)]);
@@ -1011,7 +1038,7 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
       return shadowRequest(http, route2, body);
     }
     async function registered3(job2) {
-      const paths = [job2.artifact.destination, job2.output, job2.publishTo].filter(Boolean);
+      const paths = [job2.artifact.destination, job2.output, job2.publishTo, ...job2.published || []].filter(Boolean);
       const info = (title) => shadowRequest2("games/info", { title_id: title }).catch((error2) => {
         if (/HTTP 404/.test(error2.message)) return null;
         throw error2;
