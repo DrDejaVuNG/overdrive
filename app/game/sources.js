@@ -78,9 +78,9 @@ import { formatBytes } from '../state/size.js';
   var GROUP_RANK = { direct: 0, page: 1, browser: 2, unavailable: 3 };
   var HEALTH_RANK = { ok: 0, flaky: 2 };
   var isBackport = ({ label }) => /\bback\s*port\b/i.test(label || "");
-  // After MediaFire, the browser hosts confirmed on the console (Vikingfile, DataNodes) before the ones
-  // still being tried (FileKeeper, AkiraBox, a vault's other mirrors).
-  var CONFIRMED = /^(?:vik[i1]ngfile|datanodes)$/i;
+  // After MediaFire, the browser hosts confirmed on the console (Vikingfile, DataNodes, FileKeeper)
+  // before the ones still being tried (AkiraBox, a vault's other mirrors).
+  var CONFIRMED = /^(?:vik[i1]ngfile|datanodes|filekeeper(?:\.net)?)$/i;
   var hostRank = ({ provider }) => isOverdriveCdn(provider) ? 0 : provider.toLowerCase() === "archive.org" ? 1 : provider.toLowerCase() === "mediafire" ? 2 : CONFIRMED.test(provider) ? 3 : 4;
   var ranked = (release, index) => ({ release, index, rank: [
     isDlc(release) ? 1 : 0,
