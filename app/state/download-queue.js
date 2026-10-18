@@ -797,6 +797,10 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
           job2.state = "downloaded";
           job2.message = t("downloads.extractedReady", { parts: job2.parts ? "all" : "one" });
           if (beside) job2.message = `${job2.message} ${t("downloads.extractedLeft", { path: extracted })}`;
+        } else {
+          // No PKG and no game folder (a source holding something else): said, not left silent.
+          job2.message = t("downloads.extractedNothing", { path: job2.output });
+          console.log(`[download-queue] ${job2.id}: extracted to ${job2.output}, nothing in it to install`);
         }
       }
       change();

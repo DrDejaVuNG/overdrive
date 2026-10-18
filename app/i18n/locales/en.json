@@ -109,6 +109,7 @@
     "downloads.emptyDetail": "Games you download appear here with their progress.",
     "downloads.extractedReady": "{parts, select, all {All parts} other {Archive}} verified and extracted. Ready to install.",
     "downloads.extractedTo": "Extracted to {path}",
+    "downloads.extractedNothing": "Extracted to {path}, but the archive holds no game to install (no PKG and no game folder). Remove this download and pick another source.",
     "downloads.extractedLeft": "Other folders stayed in {path}.",
     "downloads.installFailed": "The console refused the package. Press Install to try again.",
     "downloads.installHint": "Close Overdrive to finish: ShadowMount installs once no game is open.",
