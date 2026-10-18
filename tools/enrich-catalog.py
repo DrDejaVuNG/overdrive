@@ -375,6 +375,11 @@ def edit_line(line, game, fill):
     art = re.search(r'"art": \{([^{}]*)\}', line)
     if art and ("cover" in fill or "hero" in fill):
         body = art.group(1).strip()
+        # An empty "cover"/"hero" left by a new game's skeleton line would stay after the filled one and,
+        # as the later key, win: the filled value replaces it instead.
+        for key in ("cover", "hero"):
+            if key in fill:
+                body = re.sub(rf'(?:^|,\s*)"{key}": ""', "", body).strip().lstrip(",").strip()
         if "cover" in fill:
             body = f'"cover": {js(fill["cover"])}' + (f", {body}" if body else "")
         if "hero" in fill:
