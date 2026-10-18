@@ -1,6 +1,6 @@
 """Real local archive extraction with the same native worker used on PS5."""
 from pathlib import Path
-import binascii,hashlib,io,json,lzma,os,random,struct,subprocess,sys,tarfile,tempfile,time,zipfile
+import binascii,hashlib,io,json,lzma,os,random,shutil,struct,subprocess,sys,tarfile,tempfile,time,zipfile
 from rar_worker import build_host
 ROOT=Path(__file__).resolve().parents[1]
 DATA=bytes(range(256))*1024
@@ -232,6 +232,22 @@ def main():
   with tarfile.open(tar,"w") as t:
    entry=tarfile.TarInfo("nested/file.bin");entry.size=len(DATA);t.addfile(entry,io.BytesIO(DATA))
   assert run("tar",[tar])[0]=="completed"
+  # A game folder (issue #52): 150,000 files with long paths, whose receipt is far over the 16 MiB a receipt
+  # kept in memory could take. Extracted through the write ring and inline, then recovered by a later run.
+  many=root/"many.tar";deep="Image0/"+"/".join(["sce_module_resources"]*5)
+  with tarfile.open(many,"w") as t:
+   for i in range(150000):
+    entry=tarfile.TarInfo(f"{deep}/d{i//1000}/asset_{i:06d}_with_a_rather_long_name.bin");entry.size=4;t.addfile(entry,io.BytesIO(i.to_bytes(4,"little")))
+  def many_run(name,**env):
+   return subprocess.check_output([str(binary),str(root/name),str(1<<30),str(many)],text=True,timeout=1800,env={**os.environ,**env}).splitlines()
+  for name,env in (("many-ring",{}),("many-inline",{"ARCHIVE_PIPELINE_BYTES":"0"})):
+   out=many_run(name,**env);assert out[0]=="completed",out
+   receipt=root/name/".ps5-react-extraction"
+   assert receipt.stat().st_size>16*1024*1024 and sum(1 for _ in receipt.open("rb"))==150001
+   assert not (root/name/".ps5-react-receipt-lines").exists()
+   assert (root/name/deep/"d149/asset_149999_with_a_rather_long_name.bin").read_bytes()==(149999).to_bytes(4,"little")
+  out=many_run("many-ring");assert out[0]=="completed",out
+  shutil.rmtree(root/"many-ring");shutil.rmtree(root/"many-inline");many.unlink()
   # rar-extract: images published at the set root, unsafe names and links refused, a missing middle
   # volume named as such.
   p=root/"plain.rar";p.write_bytes(plain_rar5("nested/deeper/game.ffpfsc",DATA))

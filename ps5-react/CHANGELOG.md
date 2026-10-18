@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — extraction receipts of any size
+
+- An extraction's receipt (one checksum line per file) is written to disk as it grows, through a 1 MiB
+  buffer, instead of kept whole in memory, and a later run reads it back a line at a time. A game packed
+  as a folder (issue #52: ASTRO BOT, Resident Evil Requiem) holds more files than the 16 MiB a receipt
+  could take, and failed with "Extraction receipt exceeds the metadata limit." Memory now stays the same
+  whatever the number of files; an archive may hold up to 1,000,000 entries (was 100,000). The receipt
+  file keeps its format, so extractions made before still recover.
+
 ## Unreleased — PS5 packages install
 
 - The package installer payload takes a PS5 package (`\x7F` `FIH`) as well as a PS4 one
