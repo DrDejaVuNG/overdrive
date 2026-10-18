@@ -1265,7 +1265,9 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
       try {
         const lastMetadata = await describeVikingCapture(http, last, signal);
         const [firstBytes, lastBytes] = [pageBytes(first), pageBytes(lastMetadata)];
-        return firstBytes > 0 && lastBytes >= firstBytes * 0.99;
+        // The pages round sizes ("9.90 GB"): only a last volume shown at least as big as the first
+        // counts as full, as all 30 cut sets found on 2026-10-18 were.
+        return firstBytes > 0 && lastBytes >= firstBytes;
       } catch (error2) {
         console.log("[browser-capture] the last volume's page could not be read:", error2.message);
         return false;
