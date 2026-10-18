@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — app.log keeps five sessions
+
+- app.log holds up to five sessions, each opened by a `[PS5-REACT] session <local date and time>`
+  line; the sixth start moves it to app.prev.log (the five before) and opens a new one. A file over
+  10 MiB moves aside whatever its count, and one session stops logging at 8 MiB (was 16), so the two
+  files stay under about 20 MiB. Before, every start replaced app.log and kept one session aside.
+
 ## Unreleased — Vikingfile names with spaces
 
 - Vikingfile mode reads a file name that keeps its spaces as they are in the page's JSON (or as
