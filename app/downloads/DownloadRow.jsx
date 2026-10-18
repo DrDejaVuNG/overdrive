@@ -104,7 +104,8 @@ import { Text, View } from '@ps5-react/core';
               id: job2.id,
               label: stateLabel(shown),
               moving: BUSY.includes(state) && state !== "pausing",
-              waiting: WAITING.includes(shown),
+              // An extraction past its size estimate has no total left to fill: the label shimmers instead.
+              waiting: WAITING.includes(shown) || (shown === "extracting" && !job2.total),
               complete,
               detail: shown === "finishing" ? t2("downloads.writingToDisk") : null
             }
