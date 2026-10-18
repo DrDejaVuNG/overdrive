@@ -1251,6 +1251,26 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
       change();
       pump(job2);
     }
+    // A multi-volume archive's last volume is smaller than the others. When a Vikingfile set's last
+    // listed volume is as big as its first, the archive goes on past it and can never be extracted
+    // (issue #42: 100 GB downloaded for nothing): checked from both pages' public sizes before the
+    // first volume downloads. A page that can't be read lets the download go on, as before.
+    const SIZE_UNITS = { B: 1, KB: 1024, MB: 1024 ** 2, GB: 1024 ** 3, TB: 1024 ** 4, KIB: 1024, MIB: 1024 ** 2, GIB: 1024 ** 3, TIB: 1024 ** 4 };
+    const pageBytes = (metadata) => metadata?.displaySize ? metadata.displaySize.value * (SIZE_UNITS[metadata.displaySize.unit] ?? 0) : 0;
+    async function lastVolumeIsFull(job2, first, signal) {
+      if (!job2.parts || job2.parts.length < 2 || job2.partIndex !== 0) return false;
+      const lastPart = job2.release.parts?.at(-1);
+      const last = lastPart?.sources?.[job2.parts.at(-1)?.sourceIndex || 0];
+      if (!last || vikingLinkPage(last) || !/vik[i1]ngfile\.(?:com|site)\/f\//.test(last.browserUrl || last.url || "")) return false;
+      try {
+        const lastMetadata = await describeVikingCapture(http, last, signal);
+        const [firstBytes, lastBytes] = [pageBytes(first), pageBytes(lastMetadata)];
+        return firstBytes > 0 && lastBytes >= firstBytes * 0.99;
+      } catch (error2) {
+        console.log("[browser-capture] the last volume's page could not be read:", error2.message);
+        return false;
+      }
+    }
     async function captureBrowser(job2, source2, session) {
       const current = () => captures.get(job2.id) === session && jobs.includes(job2) && job2.state === "awaiting-browser";
       let handingOff = false;
@@ -1267,6 +1287,17 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
           console.log("[browser-capture] reading public file metadata");
           metadata = await describeVikingCapture(http, source2, session.cancel.signal);
           if (!current()) return;
+          if (await lastVolumeIsFull(job2, metadata, session.cancel.signal)) {
+            if (!current()) return;
+            console.log("[browser-capture] the set's last volume is as big as the first: the archive goes on past it");
+            captures.delete(job2.id);
+            job2.state = "failed";
+            job2.error = "Incomplete RAR archive or missing volume.";
+            delete job2.captureState;
+            change();
+            pump();
+            return;
+          }
           session.task = browserCapture.capture({ prefix: VIKING_PREFIX, suffix: `/${metadata.filename}`, timeoutSeconds: 180 });
         }
         await armedCapture(session.task);
