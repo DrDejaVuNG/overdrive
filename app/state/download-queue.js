@@ -71,7 +71,11 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
   function durable(fs, stateDir2) {
     try {
       fs.mkdir(stateDir2, { recursive: true });
-      fs.exists(`${stateDir2}/downloads.json`);
+      // A folder that exists but takes no files (issue #9: every download failed with "Permission
+      // denied" before it started) leaves the queue in the app data instead.
+      const probe = `${stateDir2}/downloads.probe`;
+      fs.writeFile(probe, "", { sync: false });
+      fs.remove(probe);
       return true;
     } catch (error2) {
       console.log(`[download-queue] ${stateDir2} unavailable, queue kept in the app data: ${error2.message}`);
