@@ -13,6 +13,8 @@ import { LINK_PREFIX, captureAnchor, linkForLog, otherSourceLink, validateCaptur
 import { readJSON } from './read-json.js';
 import { mountedImages, shadowRequest, within2 } from './shadowmount.js';
 import { MARGIN2, spaceShortfall, stillNeeded } from './space.js';
+import { deletesPackages } from './package-cleanup.js';
+import { formatBytes } from './size.js';
 import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetadata, requirePart, validateVikingCapture, vikingLinkPage } from './viking-capture.js';
 
   var ACTIVE = ["resolving", "connecting", "downloading", "verifying", "extracting", "installing", "pausing"];
@@ -256,9 +258,28 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
       job2.state = "queued";
       return true;
     }
+    // Deletes the PKGs the console installed, when settings ask it (on by default): the ones it refused
+    // stay to be installed by hand. An archive's extraction folder goes whole once every package in it
+    // is installed, its other files with it. Returns the bytes freed; a file that won't go stays.
+    async function deleteInstalled(job2, paths, installed) {
+      if (!deletesPackages() || !installed.length) return 0;
+      const size = (path) => fs.stat(path)?.size || 0;
+      const freed = installed.reduce((sum, path) => sum + size(path), 0);
+      const folder = job2.packages && installed.length === paths.length && job2.output?.startsWith(`${job2.root}/downloads/extracted/`) ? job2.output : null;
+      try {
+        if (folder) await fs.removeAsync(folder);
+        else for (const path of installed) await Promise.all([path, `${path}.complete`].map((item) => fs.removeAsync(item)));
+        console.log(`[download-queue] ${job2.id}: installed, so ${folder || installed.join(", ")} deleted (${freed} bytes)`);
+        return freed;
+      } catch (error2) {
+        console.log(`[download-queue] ${job2.id}: installed, but the PKG was not deleted: ${error2.message}`);
+        return 0;
+      }
+    }
     async function install(job2) {
       const paths = job2.packages ?? [job2.downloadDestination || job2.artifact.destination];
       const backport = (path) => /backport/i.test(path);
+      const installed = [];
       try {
         for (const path of [...paths.filter((path2) => !backport(path2)), ...paths.filter(backport)]) {
           job2.state = "installing";
@@ -276,6 +297,7 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
           });
           try {
             await task.done;
+            installed.push(path);
           } catch (error2) {
             console.log(`[download-queue] install refused ${path}:`, error2.message);
             if (!backport(path) || paths.every(backport)) throw error2;
@@ -284,7 +306,9 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
           }
         }
         job2.state = "installed";
-        job2.message = t("downloads.installed");
+        const freed = await deleteInstalled(job2, paths, installed);
+        if (freed) job2.packagesDeleted = true;
+        job2.message = freed ? t("downloads.installedFreed", { size: formatBytes(freed) }) : t("downloads.installed");
         notifications.show(t("downloads.notice.installed"), job2.title);
       } catch (error2) {
         job2.state = "installer-required";
