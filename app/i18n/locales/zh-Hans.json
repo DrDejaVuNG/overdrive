@@ -182,6 +182,8 @@
   "errors.noConnection": "无法连接到服务器",
   "errors.noMemory": "内存不足，无法解压",
   "errors.noSpace": "可用空间不足",
+  "errors.noSpaceExtract": "可用空间不足，无法解压游戏",
+  "errors.action.freeThenRetryExtract": "请释放驱动器空间后重试。已下载的文件会保留。",
   "errors.noSpaceOn": "{root} 空间不足：需要 {need}，可用 {free}{queued, select, yes {（排队中的下载完成后）} other {}}",
   "errors.partIncomplete": "第 {part} 部分似乎不完整",
   "errors.partialDeleted": "已下载的文件已被删除",

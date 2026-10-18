@@ -182,6 +182,8 @@
   "errors.noConnection": "Sin conexión al servidor",
   "errors.noMemory": "No hay memoria suficiente para extraer",
   "errors.noSpace": "Espacio libre insuficiente",
+  "errors.noSpaceExtract": "No hay espacio libre suficiente para extraer el juego",
+  "errors.action.freeThenRetryExtract": "Libera espacio en la unidad y pulsa Reintentar. La descarga se conserva.",
   "errors.noSpaceOn": "Sin espacio en {root}: necesita {need}, {free} libre{queued, select, yes { después de descargas en cola} other {}}",
   "errors.partIncomplete": "La parte {part} parece incompleta",
   "errors.partialDeleted": "Se borraron sus archivos descargados",

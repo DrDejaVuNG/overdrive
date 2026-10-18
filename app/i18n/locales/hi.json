@@ -182,6 +182,8 @@
   "errors.noConnection": "सर्वर से कोई कनेक्शन नहीं",
   "errors.noMemory": "एक्सट्रैक्ट करने के लिए पर्याप्त मेमोरी नहीं है",
   "errors.noSpace": "पर्याप्त खाली स्थान नहीं",
+  "errors.noSpaceExtract": "गेम निकालने के लिए पर्याप्त खाली जगह नहीं है",
+  "errors.action.freeThenRetryExtract": "ड्राइव पर जगह खाली करें, फिर दोबारा कोशिश करें। डाउनलोड सुरक्षित रहता है।",
   "errors.noSpaceOn": "{root} पर पर्याप्त स्थान नहीं: {need} की आवश्यकता है, {free} खाली{queued, select, yes { कतार में डाउनलोड के बाद} other {}}",
   "errors.partIncomplete": "भाग {part} अधूरा लगता है",
   "errors.partialDeleted": "डाउनलोड की गई फ़ाइलें हटा दी गईं",

@@ -183,6 +183,8 @@
     "errors.noConnection": "اتصال به سرور برقرار نیست",
     "errors.noMemory": "حافظهٔ کافی برای استخراج نیست",
     "errors.noSpace": "فضای آزاد کافی نیست",
+    "errors.noSpaceExtract": "فضای خالی کافی برای استخراج بازی وجود ندارد",
+    "errors.action.freeThenRetryExtract": "روی درایو فضا آزاد کنید و دوباره تلاش کنید. دانلود حفظ می‌شود.",
     "errors.noSpaceOn": "فضای کافی روی {root} نیست: نیاز به {need}، {free} آزاد{queued, select, yes { بعد از دانلودهای در صف} other {}}",
     "errors.partIncomplete": "بخش {part} ناقص به نظر می‌رسد",
     "errors.partialDeleted": "فایل‌های دانلودشده‌اش حذف شدند",

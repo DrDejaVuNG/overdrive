@@ -185,6 +185,8 @@
     "errors.noConnection": "Geen verbinding met de server",
     "errors.noMemory": "Onvoldoende geheugen om het archief uit te pakken",
     "errors.noSpace": "Onvoldoende vrije ruimte",
+    "errors.noSpaceExtract": "Niet genoeg vrije ruimte om het spel uit te pakken",
+    "errors.action.freeThenRetryExtract": "Maak ruimte vrij op de schijf en kies Opnieuw. De download blijft bewaard.",
     "errors.noSpaceOn": "Onvoldoende ruimte op {root}: {need} vereist, {free} vrij{queued, select, yes { na downloads in de wachtrij} other {}}",
     "errors.partIncomplete": "Deel {part} lijkt onvolledig",
     "errors.partialDeleted": "De gedownloade bestanden zijn verwijderd",

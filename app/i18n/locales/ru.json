@@ -183,6 +183,8 @@
   "errors.noConnection": "Нет соединения с сервером",
   "errors.noMemory": "Недостаточно памяти для распаковки",
   "errors.noSpace": "Недостаточно свободного места",
+  "errors.noSpaceExtract": "Недостаточно свободного места для распаковки игры",
+  "errors.action.freeThenRetryExtract": "Освободите место на диске и нажмите «Повторить». Загрузка сохранится.",
   "errors.noSpaceOn": "Недостаточно места на {root}: требуется {need}, {free} свободно{queued, select, yes { после загрузок в очереди} other {}}",
   "errors.partIncomplete": "Часть {part}, похоже, загружена не полностью",
   "errors.partialDeleted": "Загруженные файлы были удалены",

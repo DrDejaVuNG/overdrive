@@ -182,6 +182,8 @@
   "errors.noConnection": "সার্ভারের সাথে কোনো সংযোগ নেই",
   "errors.noMemory": "এক্সট্র্যাক্ট করার জন্য যথেষ্ট মেমরি নেই",
   "errors.noSpace": "পর্যাপ্ত খালি স্থান নেই",
+  "errors.noSpaceExtract": "গেমটি এক্সট্র্যাক্ট করার মতো যথেষ্ট খালি জায়গা নেই",
+  "errors.action.freeThenRetryExtract": "ড্রাইভে জায়গা খালি করুন, তারপর আবার চেষ্টা করুন। ডাউনলোড রাখা থাকবে।",
   "errors.noSpaceOn": "{root} এ পর্যাপ্ত স্থান নেই: {need} প্রয়োজন, {free} খালি{queued, select, yes { সারিবদ্ধ ডাউনলোডের পরে} other {}}",
   "errors.partIncomplete": "অংশ {part} অসম্পূর্ণ মনে হচ্ছে",
   "errors.partialDeleted": "ডাউনলোড করা ফাইলগুলি মুছে ফেলা হয়েছে",

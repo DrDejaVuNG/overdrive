@@ -182,6 +182,8 @@
   "errors.noConnection": "Pas de connexion au serveur",
   "errors.noMemory": "Mémoire insuffisante pour extraire",
   "errors.noSpace": "Espace libre insuffisant",
+  "errors.noSpaceExtract": "Pas assez d'espace libre pour extraire le jeu",
+  "errors.action.freeThenRetryExtract": "Libérez de l'espace sur le disque, puis Réessayez. Le téléchargement est conservé.",
   "errors.noSpaceOn": "Espace insuffisant sur {root} : nécessite {need}, {free} libre{queued, select, yes { après les téléchargements} other {}}",
   "errors.partIncomplete": "La partie {part} semble incomplète",
   "errors.partialDeleted": "Ses fichiers téléchargés ont été supprimés",

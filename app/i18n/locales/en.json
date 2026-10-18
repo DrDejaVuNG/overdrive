@@ -185,6 +185,8 @@
     "errors.noConnection": "No connection to the server",
     "errors.noMemory": "Not enough memory to extract",
     "errors.noSpace": "Not enough free space",
+    "errors.noSpaceExtract": "Not enough free space to extract this game",
+    "errors.action.freeThenRetryExtract": "Free up space on the drive, then Retry. The download is kept.",
     "errors.noSpaceOn": "Not enough space on {root}: needs {need}, {free} free{queued, select, yes { after queued downloads} other {}}",
     "errors.partIncomplete": "Part {part} looks incomplete",
     "errors.partialDeleted": "Its downloaded files were deleted",

@@ -182,6 +182,8 @@
   "errors.noConnection": "سرور سے کوئی رابطہ نہیں",
   "errors.noMemory": "ایکسٹریکٹ کرنے کے لیے کافی میموری نہیں ہے",
   "errors.noSpace": "کافی خالی جگہ نہیں",
+  "errors.noSpaceExtract": "گیم نکالنے کے لیے کافی خالی جگہ نہیں ہے",
+  "errors.action.freeThenRetryExtract": "ڈرائیو پر جگہ خالی کریں، پھر دوبارہ کوشش کریں۔ ڈاؤن لوڈ محفوظ رہتا ہے۔",
   "errors.noSpaceOn": "{root} پر کافی جگہ نہیں: {need} چاہیے، {free} خالی{queued, select, yes { قطار میں ڈاؤن لوڈ کے بعد} other {}}",
   "errors.partIncomplete": "حصہ {part} نامکمل لگتا ہے",
   "errors.partialDeleted": "ڈاؤن لوڈ کی گئی فائلیں حذف کر دی گئیں",

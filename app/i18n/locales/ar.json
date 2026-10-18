@@ -182,6 +182,8 @@
   "errors.noConnection": "لا يوجد اتصال بالخادم",
   "errors.noMemory": "الذاكرة غير كافية للاستخراج",
   "errors.noSpace": "لا توجد مساحة حرة كافية",
+  "errors.noSpaceExtract": "لا توجد مساحة كافية لفك ضغط اللعبة",
+  "errors.action.freeThenRetryExtract": "حرّر مساحة على وحدة التخزين ثم أعد المحاولة. يبقى التنزيل محفوظًا.",
   "errors.noSpaceOn": "لا توجد مساحة كافية على {root}: يحتاج {need}، {free} خالية{queued, select, yes { بعد التحميلات المقررة} other {}}",
   "errors.partIncomplete": "يبدو أن الجزء {part} غير مكتمل",
   "errors.partialDeleted": "حُذفت الملفات التي تم تنزيلها",

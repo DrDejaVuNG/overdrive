@@ -182,6 +182,8 @@
   "errors.noConnection": "Keine Verbindung zum Server",
   "errors.noMemory": "Nicht genug Speicher zum Entpacken",
   "errors.noSpace": "Nicht genug Speicherplatz",
+  "errors.noSpaceExtract": "Nicht genug freier Speicher zum Entpacken des Spiels",
+  "errors.action.freeThenRetryExtract": "Gib Speicher auf dem Laufwerk frei und tippe auf Erneut versuchen. Der Download bleibt erhalten.",
   "errors.noSpaceOn": "Nicht genug Platz auf {root}: benötigt {need}, {free} frei{queued, select, yes { nach anstehenden Downloads} other {}}",
   "errors.partIncomplete": "Teil {part} scheint unvollständig zu sein",
   "errors.partialDeleted": "Die heruntergeladenen Dateien wurden gelöscht",
