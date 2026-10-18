@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — PS5 packages install
+
+- The package installer payload takes a PS5 package (`` `FIH`) as well as a PS4 one
+  (`` `CNT`). A PS5 header has no content ID field, so it goes to the install service with none
+  and the service's answer names it; before, the payload answered "The file is not a PKG." and the
+  console was never asked. When the service answers no ID, the payload says `started (unknown)` and
+  `ok` once the service has taken the package, since there is nothing to follow it by.
+
 ## Unreleased — app.log keeps five sessions
 
 - app.log holds up to five sessions, each opened by a `[PS5-REACT] session <local date and time>`
