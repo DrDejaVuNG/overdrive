@@ -1,7 +1,7 @@
 // Copyright (C) 2026 half144 and PS5 React contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Additional attribution term: see LICENSE-ATTRIBUTION.
-// Native API contract (ABI v17) between the hosts and `@ps5-react/core`. The input actions hosts
+// Native API contract (ABI v18) between the hosts and `@ps5-react/core`. The input actions hosts
 // pass to `__ps5ReactDispatch` are a separate contract with its own version (runtime/js/input.js).
 //
 // host_api.cpp (shared) installs `globalThis.__ps5ReactNative` through
@@ -25,6 +25,7 @@
 //                                  the order asked; a path already gone counts as removed
 //   removals.poll()                [{id, state, error}]; error is the system error; consumes terminal
 //   fs.rename(from, to)
+//   fs.copyFile(from, to)          ABI v18; copies bytes, written beside `to` and renamed into place
 //   fs.chmod(path, mode)           sets permission bits
 //   fs.mounts()                    [{device, path, type}], visible to the process
 //                                  console access is opt-in via app.json

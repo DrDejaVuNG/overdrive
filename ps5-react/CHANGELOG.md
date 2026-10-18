@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — home-screen backgrounds
+
+- The build copies `.dds` files from an app's `sce_sys/` as well as `.png`: the home screen shows
+  `pic0.dds` while the app is selected and `pic1.dds` while it launches (3840x2160, BC7 DX10 DDS) and
+  ignores a `pic0.png`, which the README said was the background. The README now names the DDS files.
+- `fs.copyFile(from, to)` (ABI v18) copies a file's bytes, written beside `to` and renamed over it;
+  `readFile` and `writeFile` carry text only.
+
 ## Unreleased — extraction receipts of any size
 
 - An extraction's receipt (one checksum line per file) is written to disk as it grows, through a 1 MiB
