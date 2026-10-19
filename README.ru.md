@@ -283,6 +283,7 @@ Linux:
 - **[MyLuxy](https://github.com/MyLuxy)** — декомпилировал Overdrive, восстановил его исходный код и собрал заново.
 - **[ps5-react](https://github.com/half144/ps5-react)** — фреймворк, на котором всё работает.
 - **[ShadowMount+](https://github.com/drakmor/ShadowMountPlus)** от drakmor — устанавливает приложение.
+- **[kstuff](https://github.com/EchoStretch/kstuff-lite)** (kstuff-lite от EchoStretch, на основе kstuff от sleirsgoevy) — пейлоад ядра, благодаря которому консоль запускает хоумбрю и установленные игры.
 - **[PS5 Homebrew Catalog](https://github.com/darkxex/ps5-homebrew-catalog)** от darkxex — API магазина для раздела «Хоумбрю», и все разработчики, которые в нём есть.
 
 `ps5-react/` распространяется под GPL-3.0-or-later и содержит собственные `LICENSE`,
