@@ -10,6 +10,7 @@ import { CdnRail } from './CdnRail.jsx';
 import { ContinueRow } from './ContinueRow.jsx';
 import { FilterDrawer } from './FilterDrawer.jsx';
 import { GenreRail } from './GenreRail.jsx';
+import { HomebrewRail } from './HomebrewRail.jsx';
 import { PageHints } from './PageHints.jsx';
 import { PopularRail } from './PopularRail.jsx';
 import { RecentRow } from './RecentRow.jsx';
@@ -51,6 +52,7 @@ import { FocusScope, ScrollView, Text, View } from '@ps5-react/core';
         /* @__PURE__ */ (0, jsx)(Spotlight, {})
       ] }),
       /* @__PURE__ */ (0, jsx)(PopularRail, {}),
+      /* @__PURE__ */ (0, jsx)(HomebrewRail, {}),
       /* @__PURE__ */ (0, jsx)(CdnRail, {}),
       /* @__PURE__ */ (0, jsx)(ContinueRow, {}),
       /* @__PURE__ */ (0, jsx)(RecentRow, {}),

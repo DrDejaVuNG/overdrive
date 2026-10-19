@@ -161,11 +161,11 @@ import { FocusScope, Text, View } from '@ps5-react/core';
             /* @__PURE__ */ (0, jsx)(
               NavItem,
               {
-                focusKey: keyOf("new"),
-                label: t2("nav.new"),
-                current: shown === "new",
-                onPress: on.new,
-                onLayout: track("new"),
+                focusKey: keyOf("homebrew"),
+                label: t2("nav.homebrew"),
+                current: shown === "homebrew",
+                onPress: on.homebrew,
+                onLayout: track("homebrew"),
                 nextFocusDown: down
               }
             )

@@ -43,7 +43,8 @@
 
 ## Features
 
-- **1,800+ games** to discover, with **Top rated**, **New releases** and a featured spotlight
+- **1,800+ games** to discover, with **Top rated**, a hand-picked row and a featured spotlight
+- **Homebrew**: native PS5 apps and games from the community catalog at [prosperostore.net](https://prosperostore.net/), always up to date, installed from each developer's GitHub release
 - **Browse the whole library** with filters, sorting, scores and download sizes at a glance
 - **Downloads straight to the console**, to internal storage or any USB drive, with live speed and storage stats
 - **Favorites**, **search** with an on-screen keyboard, and a **Files** page to see and clean up what's on your drives
@@ -323,6 +324,7 @@ Nothing else in the framework is changed.
 - **[MyLuxy](https://github.com/MyLuxy)**, current maintainer, who decompiled Overdrive, recovered its source and rebuilt it.
 - **[ps5-react](https://github.com/half144/ps5-react)**, the framework it runs on.
 - **[ShadowMount+](https://github.com/drakmor/ShadowMountPlus)** by drakmor, which installs it.
+- **[PS5 Homebrew Catalog](https://github.com/darkxex/ps5-homebrew-catalog)** by darkxex, the store API behind the Homebrew section, and every developer listed in it.
 
 `ps5-react/` is GPL-3.0-or-later and carries its own `LICENSE`, `LICENSE-ATTRIBUTION` and
 `NOTICE`. Every dependency notice is copied into `notices/` inside the built app, and

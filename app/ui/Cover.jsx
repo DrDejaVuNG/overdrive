@@ -2,7 +2,7 @@
 // reconstructed from the esbuild bundle in eboot.bin
 
 import '../assets/Inter-Regular.ttf';
-import { jsx } from 'react/jsx-runtime';
+import { jsx, jsxs } from 'react/jsx-runtime';
 import { useEffect, useState } from 'react';
 import { Image, Text, View } from '@ps5-react/core';
 
@@ -43,6 +43,27 @@ import { Image, Text, View } from '@ps5-react/core';
       if (!uri || loaded === uri || last) return void 0;
       return watchStall(() => setFailed((previous) => [...previous, uri]));
     }, [uri, loaded, last]);
+    // A homebrew app's art is its square icon: shown whole in the middle of the tile, over a dimmed
+    // copy of itself that fills it, rather than cropped to a cover's shape.
+    if (uri && game.art.square) {
+      const { width = 0, height = 0, borderRadius } = Object.assign({}, ...[style].flat(Infinity).filter(Boolean));
+      const side = Math.round(Math.min(width, height) * 0.72);
+      return /* @__PURE__ */ (0, jsxs)(View, { style: [{ overflow: "hidden", alignItems: "center", justifyContent: "center", backgroundColor: "#17171a" }, style], children: [
+        /* @__PURE__ */ (0, jsx)(Image, { source: { uri }, resizeMode: "cover", style: [fill(style), { position: "absolute", left: 0, top: 0 }] }, `${uri}:wash`),
+        /* @__PURE__ */ (0, jsx)(View, { style: [fill(style), { position: "absolute", left: 0, top: 0, backgroundColor: "#17171ad1" }] }),
+        /* @__PURE__ */ (0, jsx)(
+          Image,
+          {
+            source: { uri },
+            resizeMode: "contain",
+            style: { width: side, height: side, borderRadius: borderRadius ? Math.round(borderRadius * 1.5) : 0 },
+            onLoad: () => setLoaded(uri),
+            onError: () => setFailed((previous) => [...previous, uri])
+          },
+          uri
+        )
+      ] });
+    }
     if (uri) {
       return /* @__PURE__ */ (0, jsx)(View, { style: loaded === uri ? style : [skeleton(game.art.tint), style], children: /* @__PURE__ */ (0, jsx)(
         Image,
