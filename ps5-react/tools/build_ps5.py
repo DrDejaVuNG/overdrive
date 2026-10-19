@@ -242,9 +242,10 @@ def main():
     run([sdk / "bin/prospero-clang", "-std=gnu11", "-O2", "-Wall", "-Wextra", "-Werror", "-o", installer,
          ROOT / "native/ps5/payloads/pkg_installer.c", "-lkernel_sys", "-lSceUserService"],
         env=env, log=BUILD / "pkg-installer.log")
-    # RAR sets extract in a payload of their own: UnRAR's license keeps its code out of this GPL app.
+    # RAR sets extract in a payload of their own: UnRAR's license keeps its code out of this GPL app. So
+    # does a 7z that needs more memory than the app's heap gives, with the engine's own libarchive.
     rar_extract = build_rar_worker(BUILD / "rar-extract.elf", [sdk / "bin/prospero-clang++"],
-                                   ["-I", archive_ports / "include"], [archive_ports / "lib/libcrypto.a", builtins], env)
+                                   ["-I", archive_ports / "include"], [*archive_libs, builtins], env)
     # Opens the app again after it closes, which the app itself cannot do.
     relauncher = BUILD / "relauncher.elf"
     run([sdk / "bin/prospero-clang", "-std=gnu11", "-O2", "-Wall", "-Wextra", "-Werror", "-o", relauncher,

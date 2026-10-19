@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased — large 7z archives in rar-extract
+
+- A 7z whose decoder needs more than the title heap's 64 MiB, up to 288 MiB, is extracted by
+  `rar-extract` (a `7ZX1` request, `native/rar_worker/sevenzip.cpp`, libarchive) in its own process
+  instead of being refused: repacks set a 256 MiB LZMA2 dictionary (issue #57, Cyberpunk 2077). The
+  preflight reports the memory a 7z declares (`preflight(sources, seven_zip_memory)`); the engine sends
+  such a 7z to the worker over the RAR worker's protocol and checks its files the same way.
+- The worker takes the decoder's memory and touches every page before decoding, and stops when the
+  console needs over a second to give it: a payload's `malloc` has no ceiling of its own, and a probe
+  that took 512 MiB and more froze a console's interface. The process exits after each archive, which
+  hands the memory back.
+- What both extractors share (report lines, path rule, SHA-256, the writer thread) moved from
+  `rar_worker.cpp` to `worker_io.hpp`.
+
 ## Unreleased — home-screen backgrounds
 
 - The build copies `.dds` files from an app's `sce_sys/` as well as `.png`: the home screen shows
