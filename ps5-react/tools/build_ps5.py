@@ -64,7 +64,9 @@ def main():
                PS5_CLANG=str(llvm / "clang"), PS5_PAYLOAD_SDK=str(sdk), USE_CCACHE="0")
 
     archive = args.opengl_archive or DEPS / "ps5-opengl-sdk-1.0.0.tar.gz"
-    fetch("https://github.com/blackbearreloaded/ps5-opengl/releases/download/v1.0.0/ps5-opengl-sdk-1.0.0.tar.gz",
+    # The original release (github.com/blackbearreloaded/ps5-opengl) is gone; the same archive, checked by
+    # its hash, is kept at MyLuxy/overdrive-deps.
+    fetch("https://github.com/MyLuxy/overdrive-deps/releases/download/ps5-opengl-v1.0.0/ps5-opengl-sdk-1.0.0.tar.gz",
           archive, GL_HASH)
     gl = DEPS / "ps5-opengl-sdk-1.0.0/sdk"
     if not gl.exists():

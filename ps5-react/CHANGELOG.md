@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — dependencies kept at MyLuxy/overdrive-deps
+
+- ps5-homebrew-ui and the ps5-opengl SDK are no longer available from github.com/blackbearreloaded;
+  builds worked only from CI's cache. The pinned ps5-homebrew-ui history and the SDK archive are kept,
+  unchanged, at MyLuxy/overdrive-deps, and the lock file and the build fetch them there. The revision
+  and the SDK's SHA-256 are the same.
+
 ## Unreleased — large 7z archives in rar-extract
 
 - A 7z whose decoder needs more than the title heap's 64 MiB, up to 288 MiB, is extracted by
