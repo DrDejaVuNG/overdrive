@@ -15,7 +15,7 @@ import { FocusFrame } from '../ui/FocusRing.jsx';
 import { DETAILED_CAPTION, GameCard } from '../ui/GameCard.jsx';
 import { Icon } from '../ui/Icon.jsx';
 import { colors } from '../ui/colors.js';
-import { EASE_OUT } from '../ui/ease.js';
+import { LIFT } from '../ui/ease.js';
 import { px } from '../ui/scale.js';
 import { Image, Text, View, motion, useIsFocused } from '@ps5-react/core';
 
@@ -23,12 +23,11 @@ import { Image, Text, View, motion, useIsFocused } from '@ps5-react/core';
   var TILE = { width: px(WIDTH * 2 + 24), height: px(Math.round(WIDTH * 4 / 3)), borderRadius: px(8) };
   var CAPTION2 = { width: px(WIDTH * 2 + 24), height: px(DETAILED_CAPTION) };
   var SERVED = sortGames(games.filter(onCdn), "relevance");
-  var lift2 = { type: "tween", duration: 0.3, ease: EASE_OUT };
   function CollectionCard() {
     const t2 = useT();
     const focused = useIsFocused();
     return /* @__PURE__ */ (0, jsxs)(Fragment, { children: [
-      /* @__PURE__ */ (0, jsxs)(motion.View, { style: [{ position: "relative" }, TILE], initial: false, animate: { y: focused ? -6 : 0 }, transition: lift2, children: [
+      /* @__PURE__ */ (0, jsxs)(motion.View, { style: [{ position: "relative" }, TILE], initial: false, animate: { y: focused ? -6 : 0 }, transition: LIFT, children: [
         /* @__PURE__ */ (0, jsx)(Image, { source: cdnCard, resizeMode: "cover", style: TILE }),
         /* @__PURE__ */ (0, jsx)(FocusFrame, { round: "lg" })
       ] }),
