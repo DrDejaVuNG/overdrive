@@ -324,7 +324,7 @@ Nothing else in the framework is changed.
 - **[MyLuxy](https://github.com/MyLuxy)**, current maintainer, who decompiled Overdrive, recovered its source and rebuilt it.
 - **[ps5-react](https://github.com/half144/ps5-react)**, the framework it runs on.
 - **[ShadowMount+](https://github.com/drakmor/ShadowMountPlus)** by drakmor, which installs it.
-- **[kstuff](https://github.com/EchoStretch/kstuff-lite)** (kstuff-lite by EchoStretch, from sleirsgoevy's kstuff), the kernel payload that lets the console run homebrew and the games it installs.
+- **[kstuff](https://github.com/EchoStretch/kstuff-lite)** by EchoStretch, the kernel payload that lets the console run homebrew and the games it installs.
 - **[PS5 Homebrew Catalog](https://github.com/darkxex/ps5-homebrew-catalog)** by darkxex, the store API behind the Homebrew section, and every developer listed in it.
 
 `ps5-react/` is GPL-3.0-or-later and carries its own `LICENSE`, `LICENSE-ATTRIBUTION` and
