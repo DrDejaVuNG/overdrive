@@ -320,7 +320,7 @@ Nothing else in the framework is changed.
 
 ## Credits
 
-- **[MyLuxy](https://github.com/MyLuxy)**, who decompiled Overdrive, recovered its source and rebuilt it.
+- **[MyLuxy](https://github.com/MyLuxy)**, current maintainer, who decompiled Overdrive, recovered its source and rebuilt it.
 - **[ps5-react](https://github.com/half144/ps5-react)**, the framework it runs on.
 - **[ShadowMount+](https://github.com/drakmor/ShadowMountPlus)** by drakmor, which installs it.
 
