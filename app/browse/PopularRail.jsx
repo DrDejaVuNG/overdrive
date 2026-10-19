@@ -2,7 +2,7 @@
 // reconstructed from the esbuild bundle in eboot.bin
 
 import { jsx } from 'react/jsx-runtime';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { GameRail } from './GameRail.jsx';
 import { games } from '../data/catalog.js';
 import { useT } from '../i18n/index.js';
@@ -11,6 +11,7 @@ import { FAMOUS, INDIE, picked, shuffle } from './picks.js';
 import { useNavActions } from '../state/nav.jsx';
 import { useStoreActions } from '../state/store.jsx';
 import { GameCard } from '../ui/GameCard.jsx';
+import { ART_AHEAD, FIRST_ART } from './GameRail.jsx';
 
   var WIDTH4 = 152;
   // "You might like" (was the most popular, which only Archive.org's few games could reach): forty
@@ -30,6 +31,8 @@ import { GameCard } from '../ui/GameCard.jsx';
     const t2 = useT();
     const { openGame, focusLater } = useNavActions();
     const { setFilters, setQuery, setSort } = useStoreActions();
+    // Covers load only up to a few cards past the furthest one reached.
+    const [reach, setReach] = (0, useState)(FIRST_ART);
     const seeAll = () => {
       setFilters(NO_FILTERS);
       setQuery("");
@@ -46,6 +49,8 @@ import { GameCard } from '../ui/GameCard.jsx';
           detailed: true,
           focusKey: key,
           rowEnd: index === POPULAR.length - 1,
+          deferArt: index >= reach,
+          onFocus: () => setReach((count) => Math.max(count, index + ART_AHEAD)),
           onPress: () => openGame(game.id, key)
         },
         game.id

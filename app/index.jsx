@@ -3,7 +3,7 @@
 
 import { jsx, jsxs } from 'react/jsx-runtime';
 import { useEffect, useState } from 'react';
-import { AppRegistry, FocusScope, View } from '@ps5-react/core';
+import { AppRegistry, FocusScope, ReleaseImages, View } from '@ps5-react/core';
 import { BrowsePage } from './browse/BrowsePage.jsx';
 import { DownloadsScreen } from './downloads/DownloadsScreen.jsx';
 import { FilesScreen } from './files/FilesScreen.jsx';
@@ -34,8 +34,11 @@ import { VERSION } from './version.js';
     if (screen2.name === "files") return /* @__PURE__ */ (0, jsx)(FilesScreen, { onBack: pop });
     return /* @__PURE__ */ (0, jsx)(SearchScreen, { onBack: pop, onOpenGame: openCard });
   }
+  // The store front stays mounted under every other screen; while hidden it lets its images go (the
+  // decoded cache keeps them until another screen needs the room), so a game page or the Homebrew page
+  // is not left fighting a full cache for its own.
   function BrowseLayer({ shown }) {
-    return /* @__PURE__ */ (0, jsx)(View, { style: shown ? { position: "absolute", left: 0, right: 0, top: 96, bottom: 60 } : { position: "absolute", left: 0, right: 0, top: 96, bottom: 60, display: "none" }, children: /* @__PURE__ */ (0, jsx)(StoreFreeze, { frozen: !shown, children: /* @__PURE__ */ (0, jsx)(FocusScope, { focusKey: "page", autoFocus: true, inert: !shown, children: /* @__PURE__ */ (0, jsx)(BrowsePage, {}) }) }) });
+    return /* @__PURE__ */ (0, jsx)(View, { style: shown ? { position: "absolute", left: 0, right: 0, top: 96, bottom: 60 } : { position: "absolute", left: 0, right: 0, top: 96, bottom: 60, display: "none" }, children: /* @__PURE__ */ (0, jsx)(ReleaseImages, { when: !shown, children: /* @__PURE__ */ (0, jsx)(StoreFreeze, { frozen: !shown, children: /* @__PURE__ */ (0, jsx)(FocusScope, { focusKey: "page", autoFocus: true, inert: !shown, children: /* @__PURE__ */ (0, jsx)(BrowsePage, {}) }) }) }) });
   }
   var WARM_DELAY_MS = 3e3;
   function App() {

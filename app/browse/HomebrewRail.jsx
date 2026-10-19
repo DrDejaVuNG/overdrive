@@ -4,8 +4,8 @@
 
 import '../assets/Inter-Regular.ttf';
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
-import { memo } from 'react';
-import { GameRail } from './GameRail.jsx';
+import { memo, useState } from 'react';
+import { ART_AHEAD, FIRST_ART, GameRail } from './GameRail.jsx';
 import { focusEnd, useLocale, useT } from '../i18n/index.js';
 import { useHomebrew } from '../state/homebrew.js';
 import { useNavActions } from '../state/nav.jsx';
@@ -53,13 +53,23 @@ import { Image, Text, View, motion, useIsFocused } from '@ps5-react/core';
     const { rtl } = useLocale();
     const { apps } = useHomebrew();
     const { openGame, push } = useNavActions();
+    // Icons load only up to a few cards past the furthest one reached.
+    const [reach, setReach] = (0, useState)(FIRST_ART);
     if (!apps.length) return null;
     const shown = apps.slice(0, SHOWN);
     const seeAll = (from) => push({ name: "homebrew" }, from);
     return /* @__PURE__ */ (0, jsxs)(GameRail, { title: t2("nav.homebrew"), onSeeAll: () => seeAll("homebrew:all"), seeAllKey: "homebrew:all", children: [
-      shown.map((app) => {
+      shown.map((app, index) => {
         const key = `homebrew:${app.id}`;
-        return /* @__PURE__ */ (0, jsx)(GameCard, { game: app, width: WIDTH, detailed: true, focusKey: key, onPress: () => openGame(app.id, key) }, app.id);
+        return /* @__PURE__ */ (0, jsx)(GameCard, {
+          game: app,
+          width: WIDTH,
+          detailed: true,
+          focusKey: key,
+          deferArt: index >= reach,
+          onFocus: () => setReach((count) => Math.max(count, index + ART_AHEAD)),
+          onPress: () => openGame(app.id, key)
+        }, app.id);
       }),
       /* @__PURE__ */ (0, jsx)(View, { ...focusEnd(rtl, MORE_KEY), focusKey: MORE_KEY, onPress: () => seeAll(MORE_KEY), children: /* @__PURE__ */ (0, jsx)(MoreCard, { apps: apps.slice(0, 4), count: apps.length }) })
     ] });
