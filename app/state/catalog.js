@@ -86,8 +86,12 @@ import { FileSystem, Image } from '@ps5-react/core';
     if (!game || listed.has(game)) return id;
     return editionsOf(game).find((edition2) => listed.has(edition2) && edition2.platform === game.platform)?.id ?? id;
   }
+  // Downloads art to the disk cache ahead of the screens that show it. The homebrew icons go first: the
+  // Homebrew page shows about twenty at once, from a host that answers in about 400 ms. One call: the
+  // engine keeps a single warm list, which each call replaces.
   function warmCovers() {
-    Image.warm(sortGames(games, "relevance").filter((game) => game.art.cover).map((game) => game.art.cover));
+    const icons = homebrewApps().map((app) => app.art.cover).filter(Boolean);
+    Image.warm([...icons, ...sortGames(games, "relevance").filter((game) => game.art.cover).map((game) => game.art.cover)]);
   }
   var SORTS = [
     // New releases first: the library's sort menu opens on it.
