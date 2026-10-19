@@ -44,7 +44,7 @@ import { FocusScope, Text, View } from '@ps5-react/core';
     const immersive = useIsImmersive();
     const [layouts, track] = useNavLayouts();
     const onlyGenre = filters.genre.length === 1 && activeCount(filters) === 1 && filters.genre[0];
-    const down = top.name === "browse" ? "page" : "screen";
+    const down = top.name === "browse" ? "page" : top.name === "homebrew" ? "homebrew-page" : "screen";
     const toastAction = (0, useRef)(null);
     const onAction = (action) => {
       if (action === "r2" && toastAction.current) {

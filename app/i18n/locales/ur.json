@@ -339,8 +339,6 @@
   "homebrew.kind.app": "ایپس",
   "homebrew.kind.game": "گیمز",
   "homebrew.kind.tool": "ٹولز",
-  "homebrew.loading": "ہوم برو کیٹلاگ لوڈ ہو رہا ہے…",
-  "homebrew.loadingApp": "ایپ کی تفصیلات پڑھی جا رہی ہیں…",
   "homebrew.releaseNotes": "{version} میں نیا کیا ہے",
   "homebrew.retry": "دوبارہ کوشش کریں",
   "homebrew.sandbox.leaves": "مکمل رسائی",

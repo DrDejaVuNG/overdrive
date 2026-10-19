@@ -14,13 +14,13 @@ import { GameCard } from '../ui/GameCard.jsx';
 import { ART_AHEAD, FIRST_ART } from './GameRail.jsx';
 
   var WIDTH4 = 152;
-  // "You might like" (was the most popular, which only Archive.org's few games could reach): forty
+  // "You might like" (was the most popular, which only Archive.org's few games could reach): 25
   // games, new on every launch, from the hand-picked famous and indie ones and the rest of the
   // catalog's games that have art and a genre, so the row always has something worth opening.
-  var PICKS = 40;
+  var PICKS = 25;
   function selectPicks() {
-    const famous = picked(games, FAMOUS).slice(0, 16);
-    const indie = picked(games, INDIE).slice(0, 8);
+    const famous = picked(games, FAMOUS).slice(0, 10);
+    const indie = picked(games, INDIE).slice(0, 5);
     const chosen = new Set([...famous, ...indie]);
     const others = shuffle(games.filter((game) => !chosen.has(game) && game.art.cover && game.art.hero && game.genres.length)).slice(0, PICKS - chosen.size);
     return shuffle([...famous, ...indie, ...others]);

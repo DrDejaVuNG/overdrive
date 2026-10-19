@@ -340,8 +340,6 @@
   "homebrew.kind.app": "Приложения",
   "homebrew.kind.game": "Игры",
   "homebrew.kind.tool": "Инструменты",
-  "homebrew.loading": "Загрузка каталога хоумбрю…",
-  "homebrew.loadingApp": "Чтение сведений о приложении…",
   "homebrew.releaseNotes": "Что нового в {version}",
   "homebrew.retry": "Повторить",
   "homebrew.sandbox.leaves": "Полный доступ",

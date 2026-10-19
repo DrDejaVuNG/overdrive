@@ -339,8 +339,6 @@
   "homebrew.kind.app": "Aplikasi",
   "homebrew.kind.game": "Game",
   "homebrew.kind.tool": "Alat",
-  "homebrew.loading": "Memuat katalog homebrew…",
-  "homebrew.loadingApp": "Membaca detail aplikasi…",
   "homebrew.releaseNotes": "Yang baru di {version}",
   "homebrew.retry": "Coba lagi",
   "homebrew.sandbox.leaves": "Akses penuh",

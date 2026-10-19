@@ -339,8 +339,6 @@
   "homebrew.kind.app": "アプリ",
   "homebrew.kind.game": "ゲーム",
   "homebrew.kind.tool": "ツール",
-  "homebrew.loading": "自作ソフトのカタログを読み込み中…",
-  "homebrew.loadingApp": "アプリの詳細を読み込み中…",
   "homebrew.releaseNotes": "{version} の新機能",
   "homebrew.retry": "再試行",
   "homebrew.sandbox.leaves": "本体へのフルアクセス",

@@ -339,8 +339,6 @@
   "homebrew.kind.app": "অ্যাপ",
   "homebrew.kind.game": "গেম",
   "homebrew.kind.tool": "টুল",
-  "homebrew.loading": "হোমব্রু ক্যাটালগ লোড হচ্ছে…",
-  "homebrew.loadingApp": "অ্যাপের বিবরণ পড়া হচ্ছে…",
   "homebrew.releaseNotes": "{version}-এ নতুন যা আছে",
   "homebrew.retry": "আবার চেষ্টা করুন",
   "homebrew.sandbox.leaves": "সম্পূর্ণ অ্যাক্সেস",

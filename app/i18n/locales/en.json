@@ -348,8 +348,6 @@
     "homebrew.kind.app": "Apps",
     "homebrew.kind.game": "Games",
     "homebrew.kind.tool": "Tools",
-    "homebrew.loading": "Loading the homebrew catalog\u2026",
-    "homebrew.loadingApp": "Reading this app's details\u2026",
     "homebrew.releaseNotes": "What's new in {version}",
     "homebrew.retry": "Try again",
     "homebrew.sandbox.leaves": "Full console access",

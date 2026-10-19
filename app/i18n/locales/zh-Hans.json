@@ -339,8 +339,6 @@
   "homebrew.kind.app": "应用",
   "homebrew.kind.game": "游戏",
   "homebrew.kind.tool": "工具",
-  "homebrew.loading": "正在加载自制软件目录…",
-  "homebrew.loadingApp": "正在读取应用详情…",
   "homebrew.releaseNotes": "{version} 新内容",
   "homebrew.retry": "重试",
   "homebrew.sandbox.leaves": "完全访问主机",

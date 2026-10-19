@@ -339,8 +339,6 @@
   "homebrew.kind.app": "التطبيقات",
   "homebrew.kind.game": "الألعاب",
   "homebrew.kind.tool": "الأدوات",
-  "homebrew.loading": "جارٍ تحميل كتالوج التطبيقات…",
-  "homebrew.loadingApp": "جارٍ قراءة تفاصيل التطبيق…",
   "homebrew.releaseNotes": "الجديد في {version}",
   "homebrew.retry": "إعادة المحاولة",
   "homebrew.sandbox.leaves": "وصول كامل",

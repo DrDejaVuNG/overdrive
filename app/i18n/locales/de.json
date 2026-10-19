@@ -339,8 +339,6 @@
   "homebrew.kind.app": "Apps",
   "homebrew.kind.game": "Spiele",
   "homebrew.kind.tool": "Tools",
-  "homebrew.loading": "Homebrew-Katalog wird geladen …",
-  "homebrew.loadingApp": "Details der App werden gelesen …",
   "homebrew.releaseNotes": "Neu in {version}",
   "homebrew.retry": "Erneut versuchen",
   "homebrew.sandbox.leaves": "Voller Zugriff",

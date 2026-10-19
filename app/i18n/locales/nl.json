@@ -344,8 +344,6 @@
     "homebrew.kind.app": "Apps",
     "homebrew.kind.game": "Games",
     "homebrew.kind.tool": "Tools",
-    "homebrew.loading": "Homebrewcatalogus laden…",
-    "homebrew.loadingApp": "Details van de app lezen…",
     "homebrew.releaseNotes": "Nieuw in {version}",
     "homebrew.retry": "Opnieuw proberen",
     "homebrew.sandbox.leaves": "Volledige toegang",

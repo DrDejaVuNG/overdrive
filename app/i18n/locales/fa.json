@@ -340,8 +340,6 @@
     "homebrew.kind.app": "برنامه‌ها",
     "homebrew.kind.game": "بازی‌ها",
     "homebrew.kind.tool": "ابزارها",
-    "homebrew.loading": "در حال بارگیری کاتالوگ هوم‌برو…",
-    "homebrew.loadingApp": "در حال خواندن جزئیات برنامه…",
     "homebrew.releaseNotes": "تازه‌های {version}",
     "homebrew.retry": "تلاش دوباره",
     "homebrew.sandbox.leaves": "دسترسی کامل",
