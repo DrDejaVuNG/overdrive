@@ -14,7 +14,7 @@ import { CdnMark } from './CdnAura.jsx';
 import { Cover } from './Cover.jsx';
 import { Icon } from './Icon.jsx';
 import { colors } from './colors.js';
-import { EASE_OUT, LIFT } from './ease.js';
+import { EASE_OUT } from './ease.js';
 import { lightGame, unlight } from './lightBar.js';
 import { canScale, px } from './scale.js';
 import { Text, View, motion, transitions, useIsFocused } from '@ps5-react/core';
@@ -90,7 +90,7 @@ import { Text, View, motion, transitions, useIsFocused } from '@ps5-react/core';
           style: [{ borderRadius: 12, backgroundColor: "#17171a" }, box.tile],
           initial: false,
           animate: focused ? lift : rest,
-          transition: LIFT,
+          transition: focusMotion,
           children: [
             /* @__PURE__ */ (0, jsx)(Cover, { game, style: box.cover }),
             /* @__PURE__ */ (0, jsx)(WishBadge, { id: game.id }),
