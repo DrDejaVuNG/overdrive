@@ -6,6 +6,9 @@
   cache's up to 256 and the app's baked ones, so a cache full of small images (an app's icons, well under
   its 64 MiB) filled it, and each new image after that was discarded with "Image.load: the engine image
   registry is full" and never drew. 512 slots cost 45 KB.
+- When the registry is full all the same, the image about to be published makes room: cached images
+  nothing holds are evicted, least recently used first, until it fits; only when every cached image is
+  held is it discarded. The `images:` stats line adds `cached`, `pinned` (held) and `registry` counts.
 
 ## Unreleased — dependencies kept at MyLuxy/overdrive-deps
 

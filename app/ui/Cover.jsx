@@ -3,7 +3,7 @@
 
 import '../assets/Inter-Regular.ttf';
 import { jsx, jsxs } from 'react/jsx-runtime';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Image, Text, View } from '@ps5-react/core';
 
   var SKELETON = { backgroundColor: "#212125" };
@@ -33,9 +33,27 @@ import { Image, Text, View } from '@ps5-react/core';
     height: "100%",
     borderRadius: Object.assign({}, ...[style].flat(Infinity).filter(Boolean)).borderRadius
   });
+  // A full engine image registry fails a load for a moment, not for this image: the cover tries again
+  // a little later, a few times, instead of falling back to its title for as long as it stays mounted
+  // (on the store front, for the whole session).
+  var TRANSIENT = /registry is full/;
+  var RETRY_MS = 1500;
+  var RETRIES = 6;
   function Cover({ game, style, label = true, defer = false }) {
     const [failed, setFailed] = (0, useState)([]);
     const [loaded, setLoaded] = (0, useState)(null);
+    const [attempt, setAttempt] = (0, useState)(0);
+    const retry = (0, useRef)({ count: 0, timer: 0 });
+    (0, useEffect)(() => () => clearTimeout(retry.current.timer), []);
+    const failedLoad = (uri2, event) => {
+      if (TRANSIENT.test(event?.nativeEvent?.error ?? "") && retry.current.count < RETRIES) {
+        retry.current.count += 1;
+        clearTimeout(retry.current.timer);
+        retry.current.timer = setTimeout(() => setAttempt((count) => count + 1), RETRY_MS);
+        return;
+      }
+      setFailed((previous) => [...previous, uri2]);
+    };
     const copies = [game.art.cover, ...game.art.coverFallbacks || []].filter((url) => url && !failed.includes(url));
     const uri = copies[0];
     const last = copies.length < 2;
@@ -60,9 +78,9 @@ import { Image, Text, View } from '@ps5-react/core';
             resizeMode: "contain",
             style: { width: side, height: side, borderRadius: borderRadius ? Math.round(borderRadius * 1.5) : 0 },
             onLoad: () => setLoaded(uri),
-            onError: () => setFailed((previous) => [...previous, uri])
+            onError: (event) => failedLoad(uri, event)
           },
-          uri
+          `${uri}#${attempt}`
         )
       ] });
     }
@@ -74,9 +92,9 @@ import { Image, Text, View } from '@ps5-react/core';
           resizeMode: "cover",
           style: fill(style),
           onLoad: () => setLoaded(uri),
-          onError: () => setFailed((previous) => [...previous, uri])
+          onError: (event) => failedLoad(uri, event)
         },
-        uri
+        `${uri}#${attempt}`
       ) });
     }
     return /* @__PURE__ */ (0, jsx)(View, { style: [{ overflow: "hidden" }, style], children: /* @__PURE__ */ (0, jsx)(View, { style: { flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#212125", padding: 12 }, children: label && /* @__PURE__ */ (0, jsx)(Text, { style: { width: "100%", textAlign: "center", fontFamily: "Inter-Regular", fontSize: 21, color: "#a3a3ab", numberOfLines: 3, ellipsizeMode: "tail", lineHeight: 30 }, children: game.title }) }) });
