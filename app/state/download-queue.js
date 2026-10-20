@@ -253,6 +253,45 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
       destination: `${root2}/downloads/extracted/${release.filename}`,
       nextAction: "extracted"
     } : formats.artifact(release, root2);
+    // Datanodes' dlproxy.uk gateway (FileKeeper's files too) can answer every range HTTP 503 with
+    // Retry-After: 60 for a while. The engine honours it, with its connections down to a few, and the
+    // download sits at 0 MB/s for minutes; a new transfer of the same link, which Pause and Resume
+    // start, goes on at full speed at once (issue #77). So a download from it that gets nothing for
+    // STALL_MS starts over by itself, from what it has written. A third start in a row with nothing
+    // received asks the source for a new link; past STALL_RESTARTS the engine's own retries decide.
+    var STALL_MS = 9e4;
+    var STALL_RESTARTS = 10;
+    function restartsAfterStall(job2) {
+      try {
+        return /(?:^|\.)dlproxy\.uk$/.test(webURL(job2.options?.url).host);
+      } catch {
+        return false;
+      }
+    }
+    function stallWatch(job2, task) {
+      let moved = Date.now(), seen = -1;
+      return (progress) => {
+        const bytes = (progress.received || 0) + (progress.completedBytes ?? progress.written ?? 0);
+        if (bytes !== seen) {
+          if (seen >= 0 && job2.stalls) {
+            console.log(`[download-queue] ${job2.id}: receiving again after ${job2.stalls} restart(s)`);
+            delete job2.stalls;
+          }
+          seen = bytes;
+          moved = Date.now();
+          return;
+        }
+        if (active2?.restarting || Date.now() - moved < STALL_MS || !["connecting", "downloading"].includes(progress.state) || !restartsAfterStall(job2)) return;
+        if ((job2.stalls || 0) >= STALL_RESTARTS) return;
+        job2.stalls = (job2.stalls || 0) + 1;
+        // Only FileKeeper's link comes from a form the app posts again; DataNodes' needs the browser.
+        const relink = job2.stalls % 3 === 0 && sourceKind(job2.release) === "filekeeper";
+        console.log(`[download-queue] ${job2.id}: nothing received for ${Math.round((Date.now() - moved) / 1e3)} s (connections ${progress.connections || 0}, retries ${progress.retries || 0}); restart ${job2.stalls} of ${STALL_RESTARTS}${relink ? ", with a new link from the source" : ""}`);
+        if (relink) delete job2.options;
+        active2.restarting = true;
+        task.cancel();
+      };
+    }
     function reresolve(job2) {
       const source2 = job2.parts ? job2.currentSource : job2.release;
       if ((job2.reresolved || 0) >= 2 || ["direct", "browser", "datanodes", "buzzheavier", "manifest", "unavailable"].includes(sourceKind(source2))) return false;
@@ -393,9 +432,11 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
         }
         task = downloads.enqueue({ ...job2.options, rejectHtml: true, mirrors: void 0, connections: 64, adaptive: true, rangeBytes: job2.options.rangeBytes, destination: job2.downloadDestination, storageRoot: job2.root, recoverCompleted: true });
         active2.task = task;
+        const stalled = stallWatch(job2, task);
         unsubscribe = task.subscribe((progress) => {
           if (job2.state === "pausing") return;
           if (ACTIVE.includes(progress.state)) job2.state = progress.state;
+          stalled(progress);
           const completedBytes = progress.completedBytes ?? progress.written ?? 0;
           if (completedBytes > 0 || !job2.written) job2.written = completedBytes;
           job2.total = progress.total ?? job2.total;
@@ -426,6 +467,12 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
         if (job2.state === "installer-required" && canInstall()) await install(job2);
       } catch (error2) {
         console.log("[download-queue] transfer stopped:", error2.message);
+        // Stopped by stallWatch: it starts over at once, as Pause and Resume would.
+        if (active2.restarting && job2.state !== "pausing" && !job2.cancelling) {
+          job2.state = "queued";
+          job2.error = "";
+          return;
+        }
         // The engine words every 401/403 as a possible browser check; from Archive.org it is a
         // restricted or removed item, so it reads as a dead link.
         const refused = archiveRefusal(job2.parts ? job2.currentSource : job2.release, cause(error2.message));
@@ -454,6 +501,7 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
         unsubscribe?.();
         if (job2.state === "pausing") job2.state = "paused";
         if (COMPLETE.includes(job2.state)) delete job2.launches;
+        const restarted = active2.restarting && job2.state === "queued";
         active2 = null;
         // A cancelled download's files are deleted after the queue moves on: deleting tens of GB from a
         // USB drive can take long, and the next download sat "queued" at 0 MB the whole time.
@@ -464,7 +512,7 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
           job2.error = `Queue save failed: ${error2.message}`;
           emit2();
         }
-        pump();
+        pump(restarted ? job2 : void 0);
       }
     }
     // Headers are read on a native worker thread (issue #71): a download's growing file can make the
