@@ -12,6 +12,7 @@ import { useNavActions } from '../state/nav.jsx';
 import { useStoreActions } from '../state/store.jsx';
 import { GameCard } from '../ui/GameCard.jsx';
 import { ART_AHEAD, FIRST_ART } from './GameRail.jsx';
+import { RowCard, useRowWindow } from './near.js';
 
   var WIDTH4 = 152;
   // "You might like" (was the most popular, which only Archive.org's few games could reach): 25
@@ -33,6 +34,8 @@ import { ART_AHEAD, FIRST_ART } from './GameRail.jsx';
     const { setFilters, setQuery, setSort } = useStoreActions();
     // Covers load only up to a few cards past the furthest one reached.
     const [reach, setReach] = (0, useState)(FIRST_ART);
+    // And the ones far from where focus rests let theirs go.
+    const row = useRowWindow();
     const seeAll = () => {
       setFilters(NO_FILTERS);
       setQuery("");
@@ -41,7 +44,7 @@ import { ART_AHEAD, FIRST_ART } from './GameRail.jsx';
     };
     return /* @__PURE__ */ (0, jsx)(GameRail, { title: t2("browse.forYou"), onSeeAll: seeAll, seeAllKey: "popular:all", children: POPULAR.map((game, index) => {
       const key = `popular:${game.id}`;
-      return /* @__PURE__ */ (0, jsx)(
+      return /* @__PURE__ */ (0, jsx)(RowCard, { far: row.far(index), children: /* @__PURE__ */ (0, jsx)(
         GameCard,
         {
           game,
@@ -50,11 +53,13 @@ import { ART_AHEAD, FIRST_ART } from './GameRail.jsx';
           focusKey: key,
           rowEnd: index === POPULAR.length - 1,
           deferArt: index >= reach,
-          onFocus: () => setReach((count) => Math.max(count, index + ART_AHEAD)),
+          onFocus: () => {
+            setReach((count) => Math.max(count, index + ART_AHEAD));
+            row.reached(index);
+          },
           onPress: () => openGame(game.id, key)
-        },
-        game.id
-      );
+        }
+      ) }, game.id);
     }) });
   });
 

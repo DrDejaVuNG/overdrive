@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — image registry headroom
+
+- The engine's image registry holds 512 images (was 256). It holds every decoded image, the decoded
+  cache's up to 256 and the app's baked ones, so a cache full of small images (an app's icons, well under
+  its 64 MiB) filled it, and each new image after that was discarded with "Image.load: the engine image
+  registry is full" and never drew. 512 slots cost 45 KB.
+
 ## Unreleased — dependencies kept at MyLuxy/overdrive-deps
 
 - ps5-homebrew-ui and the ps5-opengl SDK are no longer available from github.com/blackbearreloaded;
