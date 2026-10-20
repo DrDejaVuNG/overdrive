@@ -1635,7 +1635,9 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
         jobs.push({
           id,
           gameId: game.id,
-          titleId: game.titleId || game.id,
+          // A source of another region or edition names its file's own title id: the capture looks
+          // for it, and the files carry it, so it is no "another game?" warning.
+          titleId: release.titleId || game.titleId || game.id,
           title: game.title,
           release: { ...release },
           requestedId: release.id,
