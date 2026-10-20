@@ -1,6 +1,6 @@
 // ../pub-game-store/native/i18n/locales.js
 // reconstructed from the esbuild bundle in eboot.bin
-// MODIFIED: Italian, traditional Chinese.
+// MODIFIED: Italian, traditional Chinese, European Portuguese.
 
 
   var NBSP = "\xA0";
@@ -93,6 +93,16 @@
       code: "pt-BR",
       name: "Portugu\xEAs (Brasil)",
       group: ".",
+      decimal: ",",
+      percent: "{n}%",
+      date: "{d} de {MMM} de {y}",
+      months: ["jan.", "fev.", "mar.", "abr.", "mai.", "jun.", "jul.", "ago.", "set.", "out.", "nov.", "dez."],
+      list: [", ", " e ", " e "]
+    },
+    {
+      code: "pt-PT",
+      name: "Portugu\xEAs (Portugal)",
+      group: NBSP,
       decimal: ",",
       percent: "{n}%",
       date: "{d} de {MMM} de {y}",
