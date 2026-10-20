@@ -615,6 +615,15 @@ error, so a first volume can be refused before the remaining volumes download.
 An empty kind is not proof of anything; image kinds are recognized by superblock
 magic only, not validated as mountable.
 
+`Archives.inspectAsync(sources)` (ABI v19) does the same on a native worker
+thread and resolves with `{kind, refusal, title, waitedMs, tookMs}`; inspections
+run one at a time in the order asked, `waitedMs` behind the earlier ones. Use it
+while the file is being written: a read of a download's growing file waits
+behind the writes while they keep the drive at its write rate, and on the
+console one waited until the download ended (minutes on the render thread with
+`inspect`). Each inspection logs `archive inspect queued` and `archive inspect
+done` with both times. On a host without it, it falls back to `inspect`.
+
 
 ## Browser download capture (ABI v7)
 

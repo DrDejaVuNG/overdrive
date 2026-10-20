@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased — header checks off the render thread
+
+- Add `Archives.inspectAsync(sources)` (ABI v19): `inspect` on a native worker thread, one at a time,
+  through `archives.inspectAsync`, `inspections.poll` and `inspections.cancel`. A read of a download's
+  growing file waits behind its writes while they keep the drive at its write rate: on a console
+  downloading at ~100 MB/s to internal storage, `inspect` on the `.part` file held the render thread
+  until the download ended (122 s and 341 s in a tester's log, issue #71), and a probe writing that way
+  reproduced it (18 s at 115 MiB/s, a few ms at 100 MiB/s).
+- Each async inspection logs when it is queued and when it is done, with the time it waited and took.
+
 ## Unreleased — image registry headroom
 
 - The engine's image registry holds 512 images (was 256). It holds every decoded image, the decoded
