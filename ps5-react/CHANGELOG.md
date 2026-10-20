@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — requests beside a download
+
+- `Http.request` (and every task without a file destination) runs on a network thread of its own,
+  apart from file downloads. The one service ran its tasks one at a time, so while a download went on
+  for minutes every request waited behind it: the app's JSON, ShadowMount+'s local API, a host's page
+  for the next download. Task ids stay unique across both; only the download service starts and stops
+  libSceNet, and only it holds the disk buffers and writer threads.
+
 ## Unreleased — traditional Chinese text
 
 - Add the `chinese-traditional` text font: Noto Sans TC 2.004, subset to Big5 level 1 (5,401 hanzi
