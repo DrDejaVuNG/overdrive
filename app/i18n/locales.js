@@ -1,6 +1,6 @@
 // ../pub-game-store/native/i18n/locales.js
 // reconstructed from the esbuild bundle in eboot.bin
-// MODIFIED: Italian.
+// MODIFIED: Italian, traditional Chinese.
 
 
   var NBSP = "\xA0";
@@ -20,6 +20,15 @@
     {
       code: "zh-Hans",
       name: "\u7B80\u4F53\u4E2D\u6587",
+      group: ",",
+      decimal: ".",
+      percent: "{n}%",
+      date: "{y}\u5E74{M}\u6708{d}\u65E5",
+      list: ["\u3001", "\u548C", "\u548C"]
+    },
+    {
+      code: "zh-Hant",
+      name: "\u7E41\u9AD4\u4E2D\u6587",
       group: ",",
       decimal: ".",
       percent: "{n}%",
@@ -181,7 +190,7 @@
     const [language, ...rest2] = tag.replace(/_/g, "-").split("-");
     const exact = LOCALES.find((locale2) => locale2.code.toLowerCase() === tag.toLowerCase().replace(/_/g, "-"));
     if (exact) return exact.code;
-    if (language.toLowerCase() === "zh") return rest2.some((part) => /^(hant|tw|hk|mo)$/i.test(part)) ? null : "zh-Hans";
+    if (language.toLowerCase() === "zh") return rest2.some((part) => /^(hant|tw|hk|mo)$/i.test(part)) && !rest2.some((part) => /^hans$/i.test(part)) ? "zh-Hant" : "zh-Hans";
     return LOCALES.find((locale2) => locale2.code.split("-")[0] === language.toLowerCase())?.code ?? null;
   }
 

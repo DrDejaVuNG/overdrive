@@ -37,6 +37,7 @@
       return "other";
     },
     "zh-Hans": () => "other",
+    "zh-Hant": () => "other",
     ja: () => "other",
     id: () => "other"
   };

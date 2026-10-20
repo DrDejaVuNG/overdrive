@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — traditional Chinese text
+
+- Add the `chinese-traditional` text font: Noto Sans TC 2.004, subset to Big5 level 1 (5,401 hanzi
+  and its symbols). Han characters take it first when the language is `zh-Hant` (or `zh` with region
+  TW, HK or MO); in other languages it comes after the simplified Chinese font and before the
+  Japanese one, so a character GB 2312 lacks no longer draws in Japanese forms when both are listed.
+
 ## Unreleased — header checks off the render thread
 
 - Add `Archives.inspectAsync(sources)` (ABI v19): `inspect` on a native worker thread, one at a time,
