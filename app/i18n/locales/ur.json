@@ -117,6 +117,7 @@
   "downloads.installed": "انسٹال ہو گیا۔ یہ ہوم اسکرین پر ہے۔",
   "downloads.installedFreed": "انسٹال ہو گیا۔ PKG حذف کر دیا گیا: {size} خالی ہوا۔",
   "downloads.notice.complete": "ڈاؤن لوڈ مکمل ہو گیا",
+  "downloads.notice.confirm": "فائل مل گئی، Overdrive میں اس کی تصدیق کریں",
   "downloads.notice.failed": "ڈاؤن لوڈ ناکام",
   "downloads.notice.installed": "گیم انسٹال ہو گئی",
   "downloads.packagesExtracted": "حزمے {path} میں نکالے گئے۔ PKG انسٹالر درکار ہے۔",

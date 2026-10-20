@@ -117,6 +117,7 @@
   "downloads.installed": "تم التثبيت. اللعبة على الشاشة الرئيسية.",
   "downloads.installedFreed": "تم التثبيت. حُذف ملف PKG: تم تحرير {size}.",
   "downloads.notice.complete": "اكتمل التحميل",
+  "downloads.notice.confirm": "تم العثور على ملف، أكّده في Overdrive",
   "downloads.notice.failed": "فشل التحميل",
   "downloads.notice.installed": "تم تثبيت اللعبة",
   "downloads.packagesExtracted": "تم استخراج الحزم إلى {path}. مثبت PKG مطلوب.",

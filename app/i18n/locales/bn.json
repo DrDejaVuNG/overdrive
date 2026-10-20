@@ -117,6 +117,7 @@
   "downloads.installed": "ইনস্টল হয়েছে। এটি হোম স্ক্রিনে আছে।",
   "downloads.installedFreed": "ইনস্টল হয়েছে। PKG মুছে ফেলা হয়েছে: {size} খালি হয়েছে।",
   "downloads.notice.complete": "ডাউনলোড সম্পূর্ণ",
+  "downloads.notice.confirm": "ফাইল পাওয়া গেছে, Overdrive-এ নিশ্চিত করুন",
   "downloads.notice.failed": "ডাউনলোড ব্যর্থ",
   "downloads.notice.installed": "গেম ইনস্টল হয়েছে",
   "downloads.packagesExtracted": "প্যাকেজ {path} এ বের করা হয়েছে। একটি PKG ইনস্টলার প্রয়োজন।",

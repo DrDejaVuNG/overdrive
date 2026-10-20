@@ -131,6 +131,7 @@
   "downloads.installed": "Installato. Lo trovi nella schermata Home.",
   "downloads.installedFreed": "Installato. Il PKG è stato eliminato: {size} liberati.",
   "downloads.notice.captured": "Link acquisito, torna su Overdrive",
+  "downloads.notice.confirm": "File trovato, confermalo su Overdrive",
   "downloads.notice.complete": "Download completato",
   "downloads.notice.failed": "Download non riuscito",
   "downloads.notice.installed": "Gioco installato",

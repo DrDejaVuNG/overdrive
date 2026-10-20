@@ -117,6 +117,7 @@
   "downloads.installed": "インストールしました。ホーム画面にあります。",
   "downloads.installedFreed": "インストールしました。PKGを削除し、{size}を空けました。",
   "downloads.notice.complete": "ダウンロード完了",
+  "downloads.notice.confirm": "ファイルが見つかりました。Overdrive で確認してください",
   "downloads.notice.failed": "ダウンロード失敗",
   "downloads.notice.installed": "ゲームをインストールしました",
   "downloads.packagesExtracted": "パッケージを{path}に展開しました。PKGインストーラーが必要です。",

@@ -119,6 +119,7 @@
   "downloads.installed": "已安裝，可在主畫面找到。",
   "downloads.installedFreed": "已安裝。PKG 已刪除，已釋放 {size}。",
   "downloads.notice.captured": "已擷取連結，請返回 Overdrive",
+  "downloads.notice.confirm": "已找到檔案，請在 Overdrive 中確認",
   "downloads.notice.complete": "下載完成",
   "downloads.notice.failed": "下載失敗",
   "downloads.notice.installed": "遊戲已安裝",

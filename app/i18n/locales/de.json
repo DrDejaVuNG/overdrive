@@ -117,6 +117,7 @@
   "downloads.installed": "Installiert. Es ist auf dem Startbildschirm.",
   "downloads.installedFreed": "Installiert. Die PKG wurde gelöscht: {size} frei.",
   "downloads.notice.complete": "Download abgeschlossen",
+  "downloads.notice.confirm": "Datei gefunden, bestätige sie in Overdrive",
   "downloads.notice.failed": "Download fehlgeschlagen",
   "downloads.notice.installed": "Spiel installiert",
   "downloads.packagesExtracted": "Pakete zu {path} extrahiert. PKG-Installationstool erforderlich.",

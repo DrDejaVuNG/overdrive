@@ -117,6 +117,7 @@
     "downloads.installed": "نصب شد. روی صفحهٔ اصلی است.",
     "downloads.installedFreed": "نصب شد. فایل PKG حذف شد: {size} آزاد شد.",
     "downloads.notice.captured": "لینک گرفته شد، به Overdrive برگردید",
+    "downloads.notice.confirm": "فایل پیدا شد، آن را در Overdrive تأیید کنید",
     "downloads.notice.complete": "دانلود کامل شد",
     "downloads.notice.failed": "دانلود ناموفق بود",
     "downloads.notice.installed": "بازی نصب شد",

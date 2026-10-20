@@ -119,6 +119,7 @@
     "downloads.installed": "Installed. It's on the home screen.",
     "downloads.installedFreed": "Installed. The PKG was deleted: {size} freed.",
     "downloads.notice.captured": "Link captured, return to Overdrive",
+    "downloads.notice.confirm": "File found, confirm it in Overdrive",
     "downloads.notice.complete": "Download complete",
     "downloads.notice.failed": "Download failed",
     "downloads.notice.installed": "Game installed",

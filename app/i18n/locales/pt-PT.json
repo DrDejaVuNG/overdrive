@@ -119,6 +119,7 @@
     "downloads.installed": "Instalado. Está no ecrã inicial.",
     "downloads.installedFreed": "Instalado. O PKG foi eliminado: {size} libertados.",
     "downloads.notice.captured": "Link capturado, regresse ao Overdrive",
+    "downloads.notice.confirm": "Ficheiro encontrado, confirme no Overdrive",
     "downloads.notice.complete": "Transferência concluída",
     "downloads.notice.failed": "Transferência falhou",
     "downloads.notice.installed": "Jogo instalado",

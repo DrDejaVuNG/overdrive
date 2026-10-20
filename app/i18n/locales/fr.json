@@ -117,6 +117,7 @@
   "downloads.installed": "Installé. Il est sur l'écran d'accueil.",
   "downloads.installedFreed": "Installé. Le PKG a été supprimé : {size} libérés.",
   "downloads.notice.complete": "Téléchargement terminé",
+  "downloads.notice.confirm": "Fichier trouvé, confirmez-le dans Overdrive",
   "downloads.notice.failed": "Téléchargement échoué",
   "downloads.notice.installed": "Jeu installé",
   "downloads.packagesExtracted": "Paquets extraits vers {path}. Un installateur PKG est nécessaire.",

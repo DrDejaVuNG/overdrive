@@ -119,6 +119,7 @@
     "downloads.installed": "Geïnstalleerd. De game staat op het startscherm.",
     "downloads.installedFreed": "Geïnstalleerd. Het PKG is verwijderd: {size} vrijgemaakt.",
     "downloads.notice.captured": "Link vastgelegd, ga terug naar Overdrive",
+    "downloads.notice.confirm": "Bestand gevonden, bevestig het in Overdrive",
     "downloads.notice.complete": "Download voltooid",
     "downloads.notice.failed": "Download mislukt",
     "downloads.notice.installed": "Game geïnstalleerd",

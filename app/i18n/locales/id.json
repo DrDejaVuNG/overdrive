@@ -117,6 +117,7 @@
   "downloads.installed": "Terpasang. Sudah ada di layar beranda.",
   "downloads.installedFreed": "Terpasang. PKG sudah dihapus: {size} dikosongkan.",
   "downloads.notice.complete": "Unduhan selesai",
+  "downloads.notice.confirm": "File ditemukan, konfirmasi di Overdrive",
   "downloads.notice.failed": "Unduhan gagal",
   "downloads.notice.installed": "Game terpasang",
   "downloads.packagesExtracted": "Paket diekstrak ke {path}. Installer PKG diperlukan.",

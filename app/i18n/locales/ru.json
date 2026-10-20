@@ -117,6 +117,7 @@
   "downloads.installed": "Установлено. Игра на главном экране.",
   "downloads.installedFreed": "Установлено. PKG удалён: освобождено {size}.",
   "downloads.notice.captured": "Ссылка захвачена — вернитесь в Overdrive",
+  "downloads.notice.confirm": "Файл найден — подтвердите его в Overdrive",
   "downloads.notice.complete": "Загрузка завершена",
   "downloads.notice.failed": "Загрузка не удалась",
   "downloads.notice.installed": "Игра установлена",

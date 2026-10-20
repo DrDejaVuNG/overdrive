@@ -117,6 +117,7 @@
   "downloads.installed": "已安装，已在主屏幕上。",
   "downloads.installedFreed": "已安装。PKG 已删除：释放了 {size}。",
   "downloads.notice.complete": "下载完成",
+  "downloads.notice.confirm": "已找到文件，请在 Overdrive 中确认",
   "downloads.notice.failed": "下载失败",
   "downloads.notice.installed": "游戏已安装",
   "downloads.packagesExtracted": "安装包已解压到 {path}。需要 PKG 安装程序。",
