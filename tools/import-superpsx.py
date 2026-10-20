@@ -286,6 +286,19 @@ def section_kind(name):
     return None
 
 
+def section_extra(name):
+    """What a heading adds past "Game" or "Update 1.09", for the label: a fix for older firmware
+    reads "BackPort", as the catalog's other sources; anything else ("720p60fps", "9.00+") as given."""
+    rest = re.sub(r"^(?:game|base|update)\s*v?[\d.]*", "", name, flags=re.I).strip()
+    # "( 5.05 +)" reads "(5.05+)", "+ Free Cam" reads "Free Cam".
+    rest = re.sub(r"\s+(?=\+?\)|\+$)|(?<=[(])\s+", "", rest).lstrip("+ ")
+    if re.search(r"\bfix\s*\d|backport", rest, re.I):
+        firmware = re.findall(r"\d+\.[\dx]{1,2}\+?", rest)
+        return ("BackPort " + "/".join(firmware)).strip()
+    rest = re.sub(r"^\((.*)\)$", r"\1", rest).strip(" ()")
+    return re.sub(r"(\d)\s+\+", r"\1+", re.sub(r"\s+", " ", rest))
+
+
 def region_of(version, url):
     for text in (version, url):
         for region in REGIONS:
@@ -349,7 +362,9 @@ def build_plan(args):
         sections = [section for article in page["articles"] for section in parse_download_page(article)]
         ids = [m for s in sections for m in TITLE_ID.findall(s["version"] + " " + " ".join(u for _, u in s["links"]))]
         same_title = by_title.get(title_key(post["title"]), [])
-        target = next((tid for tid in ids if tid in games), None) or (same_title[0] if len(same_title) == 1 else None)
+        # The post's title first, when it is exactly one catalog game: a page can link another game's
+        # file by mistake (Knowledge is Power's linked Decades'), and its id must not decide.
+        target = (same_title[0] if len(same_title) == 1 else None) or next((tid for tid in ids if tid in games), None)
         if not target:
             unmatched.append(f"{post['title']} {sorted(set(ids))[:2]}")
             continue
@@ -379,10 +394,13 @@ def build_plan(args):
                 if file_id(url) in seen:
                     skipped["known"] += 1
                     continue
+                named = TITLE_ID.findall(url)
+                if named and named[0] != target and named[0] in games:
+                    skipped["another game's file"] = skipped.get("another game's file", 0) + 1
+                    continue
                 seen.add(file_id(url))
                 label_kind, update_version = kind
-                fix = re.search(r"\(fix[^)]*\)|backport[^)]*", section["name"], re.I)
-                extra = ("v" + update_version if update_version else "") + (" BackPort" if fix else "")
+                extra = " ".join(part for part in ("v" + update_version if update_version else "", section_extra(section["name"])) if part)
                 file_title = (TITLE_ID.findall(url) or TITLE_ID.findall(section["version"]) or [None])[0]
                 records.setdefault(target, []).append(
                     record_for(target, url, label_kind, update_version, region_of(section["version"], url), spec, extra.strip(), file_title))
