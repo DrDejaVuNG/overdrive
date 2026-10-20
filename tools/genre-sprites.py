@@ -57,7 +57,7 @@ SPRITES = {
         ".oaaaaaaaao.",
         "oooooccooooo",
         "obbbbccbbbbo",
-        "oaaaacdcaaao",
+        "oaaaaccaaaao",
         "oaaaaaaaaaao",
         "obbbbbbbbbbo",
         "oooooooooooo",
