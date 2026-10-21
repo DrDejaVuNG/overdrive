@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { inspectHeaders, optionalHeaders } from "./archive-headers.js";
+import { finishedHeaders, inspectHeaders, optionalHeaders } from "./archive-headers.js";
 
 const source = ["/data/downloads/game.part"];
 
@@ -90,4 +90,47 @@ test("slow worker inspection does not block the calling thread", async () => {
   release({ kind: "rar", refusal: "RAR dictionary too large", waitedMs: 50, tookMs: 300 });
   assert.equal((await result).refusal, "RAR dictionary too large");
   assert.equal(syncCalls, 0);
+});
+
+// A finished "binary" download must learn what it is: never left as an unusable ".binary".
+const quick = { log: () => {}, wait: async () => {}, retryMs: 0 };
+
+test("a finished binary download reads its headers on the worker when it can", async () => {
+  let syncCalls = 0;
+  const found = await finishedHeaders({
+    supportsAsyncInspection: true,
+    inspectAsync: async () => ({ kind: "7z" }),
+    inspect: () => { syncCalls++; return { kind: "zip" }; }
+  }, source, "downloaded", quick);
+  assert.equal(found.kind, "7z");
+  assert.equal(syncCalls, 0);
+});
+
+test("a finished binary download asks the worker once more after a failure", async () => {
+  let asyncCalls = 0, syncCalls = 0;
+  const found = await finishedHeaders({
+    supportsAsyncInspection: true,
+    inspectAsync: async () => { if (++asyncCalls === 1) throw new Error("worker busy"); return { kind: "7z" }; },
+    inspect: () => { syncCalls++; return { kind: "zip" }; }
+  }, source, "downloaded", quick);
+  assert.equal(found.kind, "7z");
+  assert.equal(asyncCalls, 2);
+  assert.equal(syncCalls, 0);
+});
+
+test("a finished binary download reads synchronously when the worker keeps failing", async () => {
+  const found = await finishedHeaders({
+    supportsAsyncInspection: true,
+    inspectAsync: async () => { throw new Error("worker exited"); },
+    inspect: () => ({ kind: "7z" })
+  }, source, "downloaded", quick);
+  assert.equal(found.kind, "7z");
+});
+
+test("a finished binary download nothing can read fails with a reason", async () => {
+  await assert.rejects(finishedHeaders({
+    supportsAsyncInspection: true,
+    inspectAsync: async () => { throw new Error("worker exited"); },
+    inspect: () => { throw new Error("read failed"); }
+  }, source, "downloaded", quick), /Could not read the downloaded file/);
 });

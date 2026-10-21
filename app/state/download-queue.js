@@ -11,7 +11,7 @@ import { archivePassword } from './archive-password.js';
 import { BrowserRequired, archiveRefusal, cancellation, createSourceResolver, sourceKind, webURL } from './download-sources.js';
 import { LINK_PREFIX, captureAnchor, linkForLog, otherSourceLink, validateCapturedLink } from './browser-links.js';
 import { readJSON } from './read-json.js';
-import { inspectHeaders, optionalHeaders } from './archive-headers.js';
+import { finishedHeaders, inspectHeaders, optionalHeaders } from './archive-headers.js';
 import { mountedImages, shadowRequest, within2 } from './shadowmount.js';
 import { MARGIN2, spaceShortfall, stillNeeded } from './space.js';
 import { deletesPackages } from './package-cleanup.js';
@@ -458,7 +458,8 @@ import { VIKING_PAGE_PREFIX, VIKING_PREFIX, describeVikingCapture, linkPageMetad
           emit2();
         });
         await task.done;
-        if (job2.artifact.nextAction === "downloaded") route(job2, archives?.inspect && await optionalHeaders(archives, [job2.downloadDestination], "downloaded"));
+        // A "binary" source is what its headers say it is: those it must have (finishedHeaders).
+        if (job2.artifact.nextAction === "downloaded") route(job2, archives?.inspect && await (job2.release.format === "binary" ? finishedHeaders : optionalHeaders)(archives, [job2.downloadDestination], "downloaded"));
         job2.state = job2.artifact.nextAction === "shadowmount" ? "downloaded" : job2.artifact.nextAction === "downloaded" ? "file-downloaded" : job2.artifact.nextAction;
         job2.written = job2.total || job2.written;
         job2.bytesPerSecond = 0;

@@ -5,10 +5,10 @@ import test from 'node:test';
 register(new URL('./download-queue-test-loader.mjs', import.meta.url), import.meta.url);
 const {createDownloadQueue} = await import('./download-queue.js');
 
-function harness({parts = false, inspections = [], extractError = null, supportsWorker = true} = {}) {
+function harness({parts = false, inspections = [], extractError = null, supportsWorker = true, format = 'binary'} = {}) {
   const files = new Map();
   const dirs = new Set(['/data']);
-  const root = '/data', filename = parts ? 'multi.rar' : 'mystery.binary';
+  const root = '/data', filename = parts ? 'multi.rar' : format === 'binary' ? 'mystery.binary' : 'mystery.' + format;
   const reads = [], extractions = [];
   let syncCalls = 0;
   const fs = {
@@ -66,7 +66,7 @@ function harness({parts = false, inspections = [], extractError = null, supports
     sources: {resolve: async entry => ({url: entry.url || 'https://example.com/part'})},
   });
   const release = {
-    id: 'source-1', filename, url: 'https://example.com/release', format: 'binary',
+    id: 'source-1', filename, url: 'https://example.com/release', format,
     ...(parts && {parts: [1, 2].map(number => ({
       number,
       sources: [{url: 'https://example.com/part' + number}],
@@ -79,17 +79,18 @@ function harness({parts = false, inspections = [], extractError = null, supports
   };
 }
 
+// By time, not turns: a finished "binary" download asks the worker again after two seconds.
 async function completed(fixture) {
-  for (let i = 0; i < 150; i++) {
+  for (const until = Date.now() + 10000; Date.now() < until;) {
     const job = fixture.queue.snapshot().find(item => item.id === fixture.id);
     if (['file-downloaded', 'extracted', 'failed'].includes(job?.state)) return job;
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise(resolve => setTimeout(resolve, 5));
   }
   throw new Error('Queue did not settle');
 }
 
-test('finished download stays completed when its optional header worker fails', async () => {
-  const fixture = harness();
+test('a finished download of a declared format stays completed when its header worker fails', async () => {
+  const fixture = harness({format: 'pkg'});
   const job = await completed(fixture);
   assert.equal(job.state, 'file-downloaded', job.error);
   assert.equal(job.error, '');
@@ -98,12 +99,23 @@ test('finished download stays completed when its optional header worker fails', 
   assert.equal(fixture.reads.length, 1);
 });
 
-test('missing worker support leaves completed downloads intact', async () => {
+// A "binary" source is routed by its headers: one nothing can read fails with a reason instead of
+// staying a ".binary" the console cannot use. The worker is asked twice, then the file is read here.
+test('a finished binary download nothing can read fails with a reason, never as a .binary', async () => {
+  const fixture = harness();
+  const job = await completed(fixture);
+  assert.equal(job.state, 'failed');
+  assert.match(job.error, /Could not read the downloaded file/);
+  assert.equal(fixture.reads.length, 2);
+  assert.equal(fixture.syncCalls, 1);
+});
+
+test('without worker support a finished binary download is read here, once complete', async () => {
   const fixture = harness({supportsWorker: false});
   const job = await completed(fixture);
-  assert.equal(job.state, 'file-downloaded', job.error);
+  assert.equal(job.state, 'failed');
   assert.equal(fixture.reads.length, 0);
-  assert.equal(fixture.syncCalls, 0);
+  assert.equal(fixture.syncCalls, 1);
 });
 
 test('a verified header refusal still fails a completed download', async () => {
