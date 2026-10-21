@@ -159,6 +159,22 @@ Overdrive is free and open source. If you enjoy it, sponsoring helps me keep it 
 </details>
 
 <details>
+<summary><b>Overdrive opens but the page doesn't load (grey covers, nothing can be selected)</b></summary>
+<br>
+
+The copy of `Overdrive.exfat` on the console is damaged. This usually happens when it is copied
+through a USB drive. Deleting the app's folders doesn't help: Overdrive creates them again at
+every start.
+
+1. Delete `Overdrive.exfat` from the `homebrew` folder, then its icon from the home screen.
+2. Download `Overdrive.exfat` again from the
+   [latest release](https://github.com/MyLuxy/overdrive/releases/latest).
+3. Copy it to the console with [PS5Upload](https://github.com/phantomptr/ps5upload) instead of a
+   USB drive, and check that its size on the console matches the downloaded file's.
+
+</details>
+
+<details>
 <summary><b>After an update, the app still shows the old version</b></summary>
 <br>
 
