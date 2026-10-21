@@ -159,7 +159,7 @@ Overdrive is free and open source. If you enjoy it, sponsoring helps me keep it 
 </details>
 
 <details>
-<summary><b>Overdrive opens but the page doesn't load (grey covers, nothing can be selected)</b></summary>
+<summary><b>Overdrive opens but the page doesn't load</b></summary>
 <br>
 
 The copy of `Overdrive.exfat` on the console is damaged. This usually happens when it is copied
