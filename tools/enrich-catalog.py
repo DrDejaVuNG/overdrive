@@ -79,6 +79,8 @@ BOILERPLATE = re.compile(r"(?i)system may need to be updated|playstation\.com/bc
                          r"available for purchase|"
                          r"playstation plus (?:membership|subscription)|ps plus (?:membership|subscription)")
 ABOUT_PARAGRAPHS = 12
+# As many screenshots as the catalog's own games have: each is an image a game's page loads.
+SHOTS = 3
 USER_AGENT = "Mozilla/5.0 (Overdrive catalog tool)"
 
 _lock = threading.Lock()
@@ -256,7 +258,7 @@ def from_store(found):
         "cover": resized(images.get(10) or images.get(1), 440),
         "hero": resized(images.get(12) or images.get(13), 1920),
         "genres": genres,
-        "shots": shots[:10],
+        "shots": shots[:SHOTS],
         "about": about,
         "summary": summary_of(about) if about else "",
         "releaseDate": date if re.fullmatch(r"\d{4}-\d{2}-\d{2}", date) else "",
@@ -351,7 +353,7 @@ def from_igdb(igdb, game, store_name=None):
             "cover": image("t_cover_big", hit["cover"]["image_id"]) if (hit.get("cover") or {}).get("image_id") else None,
             "hero": image("t_1080p", hit["artworks"][0]["image_id"]) if hit.get("artworks") else None,
             "genres": genres,
-            "shots": shots[:10],
+            "shots": shots[:SHOTS],
             "about": about,
             "summary": summary_of(about) if about else "",
             "releaseDate": time.strftime("%Y-%m-%d", time.gmtime(hit["first_release_date"])) if hit.get("first_release_date") else "",
