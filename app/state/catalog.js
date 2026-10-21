@@ -218,16 +218,44 @@ import { FileSystem, Image } from '@ps5-react/core';
   var activeCount = (filters) => FACETS.reduce((sum, facet) => sum + filters[facet.key].length, Number(filters.wishlist));
   var toggleValue = (list, value) => list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
   var passes = (game, facet, picked) => !picked.length || (facet.any ? picked.some((value) => facet.has(game, value)) : picked.every((value) => facet.has(game, value)));
-  function matching({ filters, query, wishlist }, skip) {
+  function matching({ filters, query, wishlist }) {
     const q = query.trim().toLowerCase();
     // Favorites can hold homebrew apps too; every other list is the game catalog's.
     const pool = filters.wishlist ? [...games, ...homebrewApps()] : games;
-    return pool.filter((game) => (!q || `${game.title} ${game.developer} ${game.publisher}`.toLowerCase().includes(q)) && FACETS.every((facet) => facet === skip || passes(game, facet, filters[facet.key])) && (!filters.wishlist || wishlist.includes(game.id)));
+    return pool.filter((game) => (!q || `${game.title} ${game.developer} ${game.publisher}`.toLowerCase().includes(q)) && FACETS.every((facet) => passes(game, facet, filters[facet.key])) && (!filters.wishlist || wishlist.includes(game.id)));
   }
   var filterGames = (state) => matching(state);
-  function facetCounts(state, facet) {
-    const pool = matching(state, facet.any ? facet : void 0);
-    return Object.fromEntries(facet.options.map(({ value }) => [value, pool.filter((game) => facet.has(game, value)).length]));
+  // Number each facet and corresponding games, but don't re-filter the catalog for every possibility.
+  function facetSummary({ filters, query, wishlist }) {
+    const counts = Object.fromEntries(FACETS.map((facet) => [
+      facet.key, Object.fromEntries(facet.options.map(({ value }) => [value, 0]))
+    ]));
+    const q = query.trim().toLowerCase();
+    const favorites = filters.wishlist ? new Set(wishlist) : null;
+    const pool = favorites ? [...games, ...homebrewApps()] : games;
+    let total = 0;
+    for (const game of pool) {
+      if (q && !`${game.title} ${game.developer} ${game.publisher}`.toLowerCase().includes(q)) continue;
+      if (favorites && !favorites.has(game.id)) continue;
+      // A failed OR facet can be ignored for its own counts; an AND facet cannot.
+      let failed = -1;
+      for (let index = 0; index < FACETS.length; index++) {
+        const facet = FACETS[index];
+        if (passes(game, facet, filters[facet.key])) continue;
+        if (failed !== -1) { failed = -2; break; }
+        failed = index;
+      }
+      if (failed === -2) continue;
+      if (failed === -1) total++;
+      for (let index = 0; index < FACETS.length; index++) {
+        const facet = FACETS[index];
+        if (failed !== -1 && (failed !== index || !facet.any)) continue;
+        const values = counts[facet.key];
+        for (const { value } of facet.options)
+          if (facet.has(game, value)) values[value]++;
+      }
+    }
+    return { total, counts };
   }
   var summaryOf = (game) => game.about.find((text) => text.length > 80 && text !== text.toUpperCase()) ?? game.shortDescription;
   function relatedGames(game, limit = 6) {
@@ -243,4 +271,4 @@ import { FileSystem, Image } from '@ps5-react/core';
     return formatNumber2(n);
   }
 
-export { CDN_HOST, FACETS, NO_FILTERS, SORTS, activeCount, addedAt, editionsOf, facetCounts, facetLabel, facetTitle, featureLabel, filterGames, formatCount, formatDate3, fromArchive, genreLabel, genres, getGame, listedId, onCdn, optionLabel, relatedGames, showcase, sortGames, sortLabel, summaryOf, toggleValue, warmCovers };
+export { CDN_HOST, FACETS, NO_FILTERS, SORTS, activeCount, addedAt, editionsOf, facetLabel, facetSummary, facetTitle, featureLabel, filterGames, formatCount, formatDate3, fromArchive, genreLabel, genres, getGame, listedId, onCdn, optionLabel, relatedGames, showcase, sortGames, sortLabel, summaryOf, toggleValue, warmCovers };
