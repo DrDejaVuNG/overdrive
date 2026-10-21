@@ -60,7 +60,8 @@ import { FocusScope, Text, View } from '@ps5-react/core';
         /* @__PURE__ */ (0, jsx)(NavPill, { section: shown, layouts }),
         /* @__PURE__ */ (0, jsxs)(View, { style: { flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: 24 }, children: [
           /* @__PURE__ */ (0, jsxs)(View, { style: { flexDirection: "row", alignItems: "center", gap: 0 }, children: [
-            /* @__PURE__ */ (0, jsx)(ButtonGlyph, { button: rtl ? "r1" : "l1" }),
+            // As far from Search as R1 is from the settings button (that row's gap of 6).
+            /* @__PURE__ */ (0, jsx)(View, { style: rtl ? { marginLeft: 6 } : { marginRight: 6 }, children: /* @__PURE__ */ (0, jsx)(ButtonGlyph, { button: rtl ? "r1" : "l1" }) }),
             /* @__PURE__ */ (0, jsx)(NavItem, {
               focusKey: keyOf("search"),
               icon: "search",
