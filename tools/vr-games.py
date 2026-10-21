@@ -71,7 +71,9 @@ def igdb_names(env, cache):
     for kind, platform in PLATFORMS.items():
         keys, offset = set(), 0
         while True:
-            body = f"fields name,alternative_names.name; where platforms = ({platform}); limit 500; offset {offset};"
+            # Sorted, or pages of the same query can overlap and skip games (Horizon Call of the
+            # Mountain fell out of one run).
+            body = f"fields name,alternative_names.name; where platforms = ({platform}); sort id asc; limit 500; offset {offset};"
             batch = json.loads(get("https://api.igdb.com/v4/games", data=body.encode(), headers=headers))
             for game in batch:
                 for name in [game.get("name")] + [alt.get("name") for alt in game.get("alternative_names") or []]:
