@@ -251,6 +251,7 @@
     "filters.facet.provider": "Anfitrião de transferência",
     "filters.facet.release": "Lançamento",
     "filters.facet.size": "Tamanho",
+    "filters.facet.vr": "Realidade virtual",
     "filters.favorites": "Favoritos",
     "filters.more": "+{count} mais",
     "filters.queryChip": "\u201C{query}\u201D",

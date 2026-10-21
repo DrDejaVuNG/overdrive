@@ -248,6 +248,7 @@
   "filters.facet.provider": "Download-Host",
   "filters.facet.release": "Veröffentlichung",
   "filters.facet.size": "Größe",
+  "filters.facet.vr": "Virtual Reality",
   "filters.favorites": "Favoriten",
   "filters.more": "+{count} weitere",
   "filters.queryChip": "« {query} »",

@@ -249,6 +249,7 @@
   "filters.facet.provider": "Хост загрузок",
   "filters.facet.release": "Релиз",
   "filters.facet.size": "Размер",
+  "filters.facet.vr": "Виртуальная реальность",
   "filters.favorites": "Избранное",
   "filters.more": "+{count} ещё",
   "filters.queryChip": "\"{query}\"",

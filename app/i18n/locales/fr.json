@@ -248,6 +248,7 @@
   "filters.facet.provider": "Serveur",
   "filters.facet.release": "Sortie",
   "filters.facet.size": "Taille",
+  "filters.facet.vr": "Réalité virtuelle",
   "filters.favorites": "Favoris",
   "filters.more": "+{count} de plus",
   "filters.queryChip": "« {query} »",

@@ -248,6 +248,7 @@
   "filters.facet.provider": "مضيف التحميل",
   "filters.facet.release": "الإصدار",
   "filters.facet.size": "الحجم",
+  "filters.facet.vr": "الواقع الافتراضي",
   "filters.favorites": "المفضلات",
   "filters.more": "+{count} إضافية",
   "filters.queryChip": "\"{query}\"",

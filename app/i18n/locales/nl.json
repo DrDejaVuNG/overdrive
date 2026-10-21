@@ -251,6 +251,7 @@
     "filters.facet.provider": "Downloadhost",
     "filters.facet.release": "Uitgave",
     "filters.facet.size": "Grootte",
+    "filters.facet.vr": "Virtual reality",
     "filters.favorites": "Favorieten",
     "filters.more": "+{count} meer",
     "filters.queryChip": "\u201C{query}\u201D",

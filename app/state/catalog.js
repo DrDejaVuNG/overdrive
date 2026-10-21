@@ -180,6 +180,14 @@ import { FileSystem, Image } from '@ps5-react/core';
       has: (game, value) => game.genres.includes(value)
     },
     { key: "feature", options: named(features, "feature"), has: (game, value) => game.features.includes(value) },
+    // The VR headset a game plays on (issue #92): "vr", which tools/vr-games.py writes, on the game or
+    // on one of its editions, so a PS4 game whose PS5 edition is for PS VR2 is found by either.
+    {
+      key: "vr",
+      any: true,
+      options: [{ value: "psvr", name: "PS VR" }, { value: "psvr2", name: "PS VR2" }],
+      has: (game, value) => editionsOf(game).some((edition2) => edition2.vr?.includes(value))
+    },
     {
       key: "release",
       any: true,

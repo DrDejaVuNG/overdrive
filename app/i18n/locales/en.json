@@ -251,6 +251,7 @@
     "filters.facet.provider": "Download host",
     "filters.facet.release": "Release",
     "filters.facet.size": "Size",
+    "filters.facet.vr": "Virtual reality",
     "filters.favorites": "Favorites",
     "filters.more": "+{count} more",
     "filters.queryChip": "\u201C{query}\u201D",

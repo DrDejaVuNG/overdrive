@@ -248,6 +248,7 @@
   "filters.facet.provider": "Host unduhan",
   "filters.facet.release": "Rilis",
   "filters.facet.size": "Ukuran",
+  "filters.facet.vr": "Realitas virtual",
   "filters.favorites": "Favorit",
   "filters.more": "+{count} lagi",
   "filters.queryChip": "\"{query}\"",

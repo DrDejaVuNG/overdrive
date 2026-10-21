@@ -248,6 +248,7 @@
   "filters.facet.provider": "ダウンロードホスト",
   "filters.facet.release": "発売時期",
   "filters.facet.size": "サイズ",
+  "filters.facet.vr": "VR",
   "filters.favorites": "お気に入り",
   "filters.more": "他{count}件",
   "filters.queryChip": "「{query}」",

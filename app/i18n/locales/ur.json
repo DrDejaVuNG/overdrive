@@ -248,6 +248,7 @@
   "filters.facet.provider": "ڈاؤن لوڈ میزبان",
   "filters.facet.release": "جاری",
   "filters.facet.size": "سائز",
+  "filters.facet.vr": "ورچوئل ریئلٹی",
   "filters.favorites": "پسندیدہ",
   "filters.more": "+{count} مزید",
   "filters.queryChip": "\"{query}\"",

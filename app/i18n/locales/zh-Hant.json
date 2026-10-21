@@ -251,6 +251,7 @@
   "filters.facet.provider": "下載網站",
   "filters.facet.release": "發行時間",
   "filters.facet.size": "大小",
+  "filters.facet.vr": "虛擬實境",
   "filters.favorites": "收藏",
   "filters.more": "另有 {count} 項",
   "filters.queryChip": "「{query}」",

@@ -63,6 +63,12 @@ jobs:
           IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
         run: python -P tools/enrich-catalog.py --since HEAD --write --cache "$CACHES/enrich" | sed '/looked up/d'
 
+      - name: Mark the VR games
+        env:
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
+        run: python -P tools/vr-games.py --write --cache "$CACHES/enrich"
+
       - name: Save the caches
         if: always()
         uses: actions/cache/save@v4

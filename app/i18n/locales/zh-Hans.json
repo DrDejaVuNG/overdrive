@@ -248,6 +248,7 @@
   "filters.facet.provider": "下载主机",
   "filters.facet.release": "发行时间",
   "filters.facet.size": "大小",
+  "filters.facet.vr": "虚拟现实",
   "filters.favorites": "收藏",
   "filters.more": "另有 {count} 项",
   "filters.queryChip": "“{query}”",

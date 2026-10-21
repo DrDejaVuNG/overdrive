@@ -248,6 +248,7 @@
   "filters.facet.provider": "ডাউনলোড হোস্ট",
   "filters.facet.release": "রিলিজ",
   "filters.facet.size": "আকার",
+  "filters.facet.vr": "ভার্চুয়াল রিয়েলিটি",
   "filters.favorites": "প্রিয়",
   "filters.more": "+{count} আরও",
   "filters.queryChip": "'{query}'",

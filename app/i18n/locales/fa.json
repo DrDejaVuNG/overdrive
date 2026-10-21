@@ -249,6 +249,7 @@
     "filters.facet.provider": "میزبان دانلود",
     "filters.facet.release": "انتشار",
     "filters.facet.size": "حجم",
+    "filters.facet.vr": "واقعیت مجازی",
     "filters.favorites": "علاقه‌مندی‌ها",
     "filters.more": "+{count} بیشتر",
     "filters.queryChip": "«{query}»",
