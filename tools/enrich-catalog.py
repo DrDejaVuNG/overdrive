@@ -204,9 +204,10 @@ def tint_of(cache, cover):
     tint = ""
     try:
         import io
-        pixels = list(Image.open(io.BytesIO(body)).convert("RGB").resize((32, 32)).getdata()) if body else []
-        if pixels:
-            tint = "#" + "".join("%02x" % round(sum(p[i] for p in pixels) / len(pixels)) for i in range(3))
+        # The raw RGB bytes, three to a pixel (Image.getdata goes in Pillow 14).
+        raw = Image.open(io.BytesIO(body)).convert("RGB").resize((32, 32)).tobytes() if body else b""
+        if raw:
+            tint = "#" + "".join("%02x" % round(sum(raw[i::3]) / (len(raw) // 3)) for i in range(3))
     except (OSError, ValueError):
         pass
     cache.put("tints", cover, tint)
