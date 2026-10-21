@@ -3,6 +3,7 @@
 
 import { features, games, twins } from '../data/catalog.js';
 import { formatDate2, formatNumber2, t } from '../i18n/core.js';
+import { applyUpdate, loadUpdate } from './catalog-update.js';
 import { getHomebrew, homebrewApps, relatedHomebrew } from './homebrew.js';
 import { createPageCache } from './page-cache.js';
 import { pausedFilter } from './paused-hosts.js';
@@ -11,8 +12,25 @@ import { FileSystem, Image } from '@ps5-react/core';
 
   var COVER_WIDTH = 440;
   var coverSize = (url) => url.startsWith("https://image.api.playstation.com/") ? url.replace(/([?&]w=)\d+/, `$1${COVER_WIDTH}`) : url;
-  var releaseCache = createReleaseCache((path) => FileSystem.readFile(`/app0/${path}`));
-  var pageCache = createPageCache((path) => FileSystem.readFile(`/app0/${path}`));
+  // The nightly catalog update the last launch kept (catalog-update.js), applied before anything below
+  // reads the lists; its release and page files are read in place of the build's.
+  var updated = (() => {
+    try {
+      const update = loadUpdate();
+      return update ? applyUpdate(update, games, twins) : /* @__PURE__ */ new Map();
+    } catch (error2) {
+      console.log(`[catalog-update] not applied: ${error2.message}`);
+      return /* @__PURE__ */ new Map();
+    }
+  })();
+  var dataFileText = (path) => {
+    if (!updated.has(path)) return FileSystem.readFile(`/app0/${path}`);
+    const text = updated.get(path);
+    if (text === null) throw new Error("removed by the catalog update");
+    return text;
+  };
+  var releaseCache = createReleaseCache(dataFileText);
+  var pageCache = createPageCache(dataFileText);
   var NO_PAGE = { about: [], shots: [], summary: "" };
   var SYNONYMS = {
     "Role Playing Game (RPG)": "RPG",
