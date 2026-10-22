@@ -64,7 +64,7 @@ STORE_GENRES = {"ACTION": "Action", "ADVENTURE": "Adventure", "ROLE_PLAYING_GAME
                 "SHOOTER": "Shooter", "SIMULATION": "Simulation", "SIMULATOR": "Simulation", "DRIVING_RACING": "Driving/Racing",
                 "RACING": "Driving/Racing", "STRATEGY": "Strategy", "PUZZLE": "Puzzle", "SPORTS": "Sport", "SPORT": "Sport",
                 "FIGHTING": "Fighting", "FAMILY": "Family", "CASUAL": "Casual", "ARCADE": "Arcade", "MUSIC_RHYTHM": "Music/Rhythm",
-                "MUSIC": "Music/Rhythm", "PARTY": "Party", "BRAIN_TRAINING": "Brain Training", "EDUCATIONAL": "Educational",
+                "MUSIC": "Music/Rhythm", "PARTY": "Party", "BRAIN_TRAINING": "Educational", "EDUCATIONAL": "Educational",
                 "QUIZ": "Quiz", "FIRST_PERSON_SHOOTER": "Shooter", "THIRD_PERSON_SHOOTER": "Shooter", "SURVIVAL_HORROR": "Horror"}
 IGDB_GENRES = {"Role-playing (RPG)": "Role Playing Games", "Shooter": "Shooter", "Adventure": "Adventure", "Indie": "Indie",
                "Puzzle": "Puzzle", "Racing": "Driving/Racing", "Sport": "Sport", "Strategy": "Strategy",
