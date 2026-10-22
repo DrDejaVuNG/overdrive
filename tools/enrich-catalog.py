@@ -65,12 +65,12 @@ STORE_GENRES = {"ACTION": "Action", "ADVENTURE": "Adventure", "ROLE_PLAYING_GAME
                 "RACING": "Driving/Racing", "STRATEGY": "Strategy", "PUZZLE": "Puzzle", "SPORTS": "Sport", "SPORT": "Sport",
                 "FIGHTING": "Fighting", "FAMILY": "Family", "CASUAL": "Casual", "ARCADE": "Arcade", "MUSIC_RHYTHM": "Music/Rhythm",
                 "MUSIC": "Music/Rhythm", "PARTY": "Party", "BRAIN_TRAINING": "Educational", "EDUCATIONAL": "Educational",
-                "QUIZ": "Quiz", "FIRST_PERSON_SHOOTER": "Shooter", "THIRD_PERSON_SHOOTER": "Shooter", "SURVIVAL_HORROR": "Horror"}
+                "QUIZ": "Educational", "FIRST_PERSON_SHOOTER": "Shooter", "THIRD_PERSON_SHOOTER": "Shooter", "SURVIVAL_HORROR": "Horror"}
 IGDB_GENRES = {"Role-playing (RPG)": "Role Playing Games", "Shooter": "Shooter", "Adventure": "Adventure", "Indie": "Indie",
                "Puzzle": "Puzzle", "Racing": "Driving/Racing", "Sport": "Sport", "Strategy": "Strategy",
                "Real Time Strategy (RTS)": "Strategy", "Turn-based strategy (TBS)": "Strategy", "Tactical": "Strategy",
                "Simulator": "Simulation", "Fighting": "Fighting", "Arcade": "Arcade", "Music": "Music/Rhythm",
-               "Hack and slash/Beat 'em up": "Action", "Platform": "Action", "Quiz/Trivia": "Quiz", "Card & Board Game": "Board Game"}
+               "Hack and slash/Beat 'em up": "Action", "Platform": "Action", "Quiz/Trivia": "Educational", "Card & Board Game": "Educational"}
 BOILERPLATE = re.compile(r"(?i)system may need to be updated|playstation\.com/bc|playable on ps5|ps4 version of this game|"
                          r"internet connection required|network features|online features require|terms of service|"
                          r"one-time license fee|all rights reserved|©|\(c\)\s*\d{4}|^\s*\*+\s*$|"

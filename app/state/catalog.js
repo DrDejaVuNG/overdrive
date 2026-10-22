@@ -39,8 +39,10 @@ import { FileSystem, Image } from '@ps5-react/core';
     Simulator: "Simulation",
     "Driving/Racing": "Racing",
     Sports: "Sport",
-    // Two names for a handful of games each (2026-10-22: 3 and 4): one card, under the clearer name.
-    "Brain Training": "Educational"
+    // Genres of a handful of games each (2026-10-22: 3, 4, 2 and 2), one card under the clearer name.
+    "Brain Training": "Educational",
+    Quiz: "Educational",
+    "Board Game": "Educational"
   };
   var dataFile = (dir2, id) => `data/${dir2}/${encodeURIComponent(id)}.json`;
   var pageOf = (game) => {
