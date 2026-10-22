@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write catalog-update.json: what the importers changed in app/data since a release.
 
-    python -P tools/catalog-update.py --base <tag> --version <x.y.z> --out <file> [--max-mb 8]
+    python -P tools/catalog-update.py --base <tag> --version <x.y.z> --out <file> [--max-mb 4]
 
 The nightly catalog workflow (.github/workflows/catalog.yml) runs the importers on a checkout of main,
 then this, against the latest published release: the players have that release's catalog, so the
@@ -77,7 +77,7 @@ def main():
     parser.add_argument("--base", required=True, help="the latest published release's tag")
     parser.add_argument("--version", required=True, help="that release's app version")
     parser.add_argument("--out", required=True)
-    parser.add_argument("--max-mb", type=float, default=8)
+    parser.add_argument("--max-mb", type=float, default=4)
     args = parser.parse_args()
     base = git("rev-parse", f"{args.base}^{{commit}}").decode().strip()
     before = entries(git("show", f"{base}:{DATA}/catalog.js").decode("utf-8"))

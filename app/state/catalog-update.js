@@ -14,8 +14,9 @@ import { FileSystem, Http } from '@ps5-react/core';
   var DIR = `${FileSystem.dataDir}/overdrive`;
   var FILE = `${DIR}/catalog-update.json`;
   var TAG = `${DIR}/catalog-update.etag`;
-  // tools/catalog-update.py refuses to publish more; a bigger answer is not ours.
-  var MAX_BYTES = 8 * 1024 * 1024;
+  // The most network.request reads (native network_api.cpp: more is refused before any request);
+  // tools/catalog-update.py publishes nothing bigger.
+  var MAX_BYTES = 4 * 1024 * 1024;
   var ID = /^[A-Z]{4}\d{5}$/;
   var log = (message) => console.log(`[catalog-update] ${message}`);
   var isText = (value, max = 4096) => typeof value === "string" && value.length <= max;
